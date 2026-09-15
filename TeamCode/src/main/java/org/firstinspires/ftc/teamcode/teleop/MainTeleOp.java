@@ -7,11 +7,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class MainTeleOp extends LinearOpMode {
 
     private double slowModeMultiplier = 0.25; // Multiplier for slow mode speed
-    private double nonSlowModeMultiplier = 1.0;
     private boolean slowMode = false;
-
-//TODO REMOVE
-    private int servoSpeed = 200; //Servo testing yeah yeah
+    private boolean invertMode = false;
 
     //IMPORT HARDWARE
     MainTeleOpHardware hardware = new MainTeleOpHardware();
@@ -31,13 +28,13 @@ public class MainTeleOp extends LinearOpMode {
         // Controls
         while(opModeIsActive()) {
 
-            double y = -gamepad1.left_stick_y;
+            double y = (invertMode ? 1 : -1) * gamepad1.left_stick_y;
             double x = gamepad1.left_stick_x;
             double rx = gamepad1.right_stick_x;
 
-            y = y * (slowMode ? slowModeMultiplier : nonSlowModeMultiplier);
-            x = x * (slowMode ? slowModeMultiplier : nonSlowModeMultiplier);
-            rx = rx * (slowMode ? slowModeMultiplier : nonSlowModeMultiplier);
+            y = y * (slowMode ? slowModeMultiplier : 1.0);
+            x = x * (slowMode ? slowModeMultiplier : 1.0);
+            rx = rx * (slowMode ? slowModeMultiplier : 1.0);
 
             double frontLeftPower = y + x + rx;
             double backLeftPower = y - x + rx;
@@ -49,18 +46,23 @@ public class MainTeleOp extends LinearOpMode {
             hardware.frontRight.setPower(frontRightPower);
             hardware.backRight.setPower(backRightPower);
 
+            telemetry.addData("Invert mode", invertMode);
+            telemetry.addData("Slow Mode", slowMode);
             telemetry.addData("Slow Mode Multiplier", slowModeMultiplier);
-            telemetry.addData("Speed", servoSpeed);
             telemetry.update();
 
 
-            // Right bumper enables slow mode
-            if (gamepad1.rightBumperWasPressed()) {
+            // Left bumper enables slow mode (DRIVER)
+            if (gamepad1.leftBumperWasPressed()) {
                 slowMode = !slowMode;
             }
 
+            // Right Bumper Invert (DRIVER)
+            if (gamepad1.leftBumperWasPressed()) {
+                invertMode = !invertMode;
+            }
 
-            // X: Higher slow mode speed
+            // D pad Up: Higher slow mode speed (DRIVER)
             if (gamepad1.dpadUpWasPressed()) {
                 slowModeMultiplier += 0.25;
                 if (slowModeMultiplier > 1) {
@@ -69,7 +71,7 @@ public class MainTeleOp extends LinearOpMode {
             }
 
 
-            // D Pad Down: Lower slow mode speed
+            // D Pad Down: Lower slow mode speed (DRIVER)
             if (gamepad1.dpadDownWasPressed()) {
                 slowModeMultiplier -= 0.25;
                 if (slowModeMultiplier < 0.25) {
@@ -77,15 +79,11 @@ public class MainTeleOp extends LinearOpMode {
                 }
             }
 
-
-            if(gamepad1.right_trigger_pressed) {
-                hardware.crServo.setPower(servoSpeed);
+            // Right trigger sets a servo power (OPERATOR)
+            if(gamepad2.right_trigger_pressed) {
+                hardware.crServo.setPower(100);
             }
 
-
-            if (gamepad1.leftBumperWasPressed()) {
-                servoSpeed += 100;
-            }
         }
     }
 }

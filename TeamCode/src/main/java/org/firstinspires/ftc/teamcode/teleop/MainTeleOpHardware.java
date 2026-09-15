@@ -9,6 +9,7 @@ public class MainTeleOpHardware {
 
     // Motors
     public DcMotorEx frontLeft, frontRight, backLeft, backRight;
+    public DcMotor launcherFlyWheel;
 
     public CRServo crServo; //Servo testing
 
@@ -20,6 +21,8 @@ public class MainTeleOpHardware {
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");
         backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
 
+        launcherFlyWheel = hardwareMap.get(DcMotor.class, "launcherFlyWheel");
+
         crServo = hardwareMap.get(CRServo.class, "intake");
 
         //TODO set directions
@@ -28,6 +31,7 @@ public class MainTeleOpHardware {
         backLeft.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.FORWARD);
 
+        launcherFlyWheel.setDirection(DcMotor.Direction.FORWARD);
 
         //Break behavior (BREAK, FLOAT)
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -35,6 +39,7 @@ public class MainTeleOpHardware {
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        launcherFlyWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
