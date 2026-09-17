@@ -8,8 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class MainTeleOpHardware {
 
     // Motors
-    public DcMotorEx frontLeft, frontRight, backLeft, backRight;
-    public DcMotor launcherFlyWheel;
+    public DcMotorEx frontLeft, frontRight, backLeft, backRight, launcherFlyWheel;
 
     public CRServo crServo; //Servo testing
 
@@ -21,7 +20,7 @@ public class MainTeleOpHardware {
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");
         backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
 
-        launcherFlyWheel = hardwareMap.get(DcMotor.class, "launcherFlyWheel");
+        launcherFlyWheel = hardwareMap.get(DcMotorEx.class, "launcherFlyWheel")
 
         crServo = hardwareMap.get(CRServo.class, "intake");
 
@@ -39,12 +38,14 @@ public class MainTeleOpHardware {
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        launcherFlyWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        launcherFlyWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        launcherFlyWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //TODO REMOVE
         crServo.setDirection(CRServo.Direction.FORWARD);
