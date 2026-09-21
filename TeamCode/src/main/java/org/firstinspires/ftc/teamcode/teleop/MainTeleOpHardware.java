@@ -20,7 +20,7 @@ public class MainTeleOpHardware {
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");
         backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
 
-        launcherFlyWheel = hardwareMap.get(DcMotorEx.class, "launcherFlyWheel")
+        launcherFlyWheel = hardwareMap.get(DcMotorEx.class, "launcherFlyWheel");
 
         crServo = hardwareMap.get(CRServo.class, "intake");
 

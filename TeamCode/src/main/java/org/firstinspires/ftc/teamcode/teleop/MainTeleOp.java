@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.mechanisms.Launcher;
+
 @TeleOp(name = "TelOpV1", group = "Aquanauts")
 public class MainTeleOp extends LinearOpMode {
 
@@ -12,6 +14,9 @@ public class MainTeleOp extends LinearOpMode {
 
     //IMPORT HARDWARE
     MainTeleOpHardware hardware = new MainTeleOpHardware();
+
+    //IMPORT LAUNCHER
+    Launcher launcher = new Launcher();
 
 
     public void runOpMode() {
@@ -82,6 +87,10 @@ public class MainTeleOp extends LinearOpMode {
             // Right trigger sets a servo power (OPERATOR)
             if(gamepad2.right_trigger_pressed) {
                 hardware.crServo.setPower(100);
+            }
+
+            if(gamepad2.right_trigger_pressed) {
+                launcher.shoot();
             }
 
         }
