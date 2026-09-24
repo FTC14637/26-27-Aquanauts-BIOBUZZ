@@ -6,11 +6,20 @@ import org.firstinspires.ftc.teamcode.teleop.MainTeleOpHardware;
 
 public class Launcher {
 
-    MainTeleOpHardware hardware = new MainTeleOpHardware();
+    private MainTeleOpHardware hardware;
+
+    public Launcher(MainTeleOpHardware hardware) {
+        this.hardware = hardware;
+    }
 
     public enum LauncherState {IDLE, SPEEDING_UP, LAUNCHING}
 
     private LauncherState state = LauncherState.IDLE;
+
+    // GETTER METHOD:
+    public LauncherState getState() {
+        return state;
+    }
 
     private final ElapsedTime inToleranceTimer = new ElapsedTime();
 

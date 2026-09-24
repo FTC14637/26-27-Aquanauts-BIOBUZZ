@@ -16,13 +16,14 @@ public class MainTeleOp extends LinearOpMode {
     MainTeleOpHardware hardware = new MainTeleOpHardware();
 
     //IMPORT LAUNCHER
-    Launcher launcher = new Launcher();
+    Launcher launcher;
 
 
     public void runOpMode() {
 
         //DEFINE HARDWARE NAME
         hardware.init(hardwareMap);
+        launcher = new Launcher(hardware);
 
         telemetry.addLine("Initialized, waiting for start...");
         telemetry.update();
@@ -58,7 +59,7 @@ public class MainTeleOp extends LinearOpMode {
 
 
             // Left bumper enables slow mode (DRIVER)
-            if (gamepad1.leftBumperWasPressed()) {
+            if (gamepad1.rightBumperWasPressed()) {
                 slowMode = !slowMode;
             }
 
@@ -84,10 +85,13 @@ public class MainTeleOp extends LinearOpMode {
                 }
             }
 
+            /*
             // Right trigger sets a servo power (OPERATOR)
             if(gamepad2.right_trigger_pressed) {
                 hardware.crServo.setPower(100);
             }
+
+             */
 
             if(gamepad2.right_trigger_pressed) {
                 launcher.shoot();
