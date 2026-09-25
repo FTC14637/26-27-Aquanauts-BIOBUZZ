@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.mechanisms.Launcher;
-import org.firstinspires.ftc.teamcode.teleop.MainTeleOpHardware;
+import org.firstinspires.ftc.teamcode.Hardware;
 
 
 
@@ -13,13 +13,13 @@ public class LauncherTest extends LinearOpMode {
 
 
     private Launcher launcher;
-    private MainTeleOpHardware hardware;
+    private Hardware hardware;
 
 
     @Override
     public void runOpMode() {
 
-        hardware = new MainTeleOpHardware();
+        hardware = new Hardware();
         hardware.launcherFlyWheel = hardwareMap.get(DcMotorEx.class, "launcherFlyWheel");
         //hardware.launcherFlyWheel.setMode(com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER);
 

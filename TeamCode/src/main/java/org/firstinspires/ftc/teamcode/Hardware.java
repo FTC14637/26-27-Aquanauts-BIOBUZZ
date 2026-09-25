@@ -1,14 +1,14 @@
-package org.firstinspires.ftc.teamcode.teleop;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class MainTeleOpHardware {
+public class Hardware {
 
     // Motors
-    public DcMotorEx frontLeft, frontRight, backLeft, backRight, launcherFlyWheel;
+    public DcMotorEx frontLeft, frontRight, backLeft, backRight, launcherFlyWheel, intake;
 
     public CRServo crServo; //Servo testing
 
@@ -21,6 +21,7 @@ public class MainTeleOpHardware {
         backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
 
         launcherFlyWheel = hardwareMap.get(DcMotorEx.class, "launcherFlyWheel");
+        intake = hardwareMap.get(DcMotorEx.class, "intake");
 
         //crServo = hardwareMap.get(CRServo.class, "intake");
 
@@ -31,6 +32,7 @@ public class MainTeleOpHardware {
         backRight.setDirection(DcMotor.Direction.FORWARD);
 
         launcherFlyWheel.setDirection(DcMotor.Direction.REVERSE);
+        intake.setDirection(DcMotor.Direction.REVERSE);
 
         //Break behavior (BREAK, FLOAT)
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -39,6 +41,7 @@ public class MainTeleOpHardware {
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         launcherFlyWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -46,6 +49,7 @@ public class MainTeleOpHardware {
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         launcherFlyWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //TODO REMOVE
         //crServo.setDirection(CRServo.Direction.FORWARD);

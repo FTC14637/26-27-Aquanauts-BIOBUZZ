@@ -2,13 +2,13 @@ package org.firstinspires.ftc.teamcode.mechanisms;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.teleop.MainTeleOpHardware;
+import org.firstinspires.ftc.teamcode.Hardware;
 
 public class Launcher {
 
-    private MainTeleOpHardware hardware;
+    private Hardware hardware;
 
-    public Launcher(MainTeleOpHardware hardware) {
+    public Launcher(Hardware hardware) {
         this.hardware = hardware;
     }
 
@@ -16,18 +16,16 @@ public class Launcher {
 
     private LauncherState state = LauncherState.IDLE;
 
-    // GETTER METHOD:
+    // GET METHOD
     public LauncherState getState() {
         return state;
     }
 
     private final ElapsedTime inToleranceTimer = new ElapsedTime();
 
-    private final int TARGET_LAUNCHER_VELOCITY = 1500; // Target RPM for both launcher motors
+    private final int TARGET_LAUNCHER_VELOCITY = 5000; // Target RPM for both launcher motors
     private final int LAUNCHER_TOLERANCE = 100; // Tolerance of RPM required for launch
     private final int LAUNCHER_IN_RANGE_TIME = 250; // How long the launcher must be within the target RPM tolerance to launch (milliseconds)
-
-    private int launches = 0;
 
     // Call this method from TeleOp when a button is pressed
     public void shoot() {
@@ -62,11 +60,8 @@ public class Launcher {
             case LAUNCHING:
                 hardware.launcherFlyWheel.setVelocity(TARGET_LAUNCHER_VELOCITY);
 
-                if (inToleranceTimer.milliseconds() > 300) {
-                    //TODO add close gate to open to launch balls
-                    launches++;
-                    state = LauncherState.IDLE; // Reset back to IDLE (or SPEEDING_UP if shooting multiples)
-                }
+                //TODO open gate
+
                 break;
 
         }

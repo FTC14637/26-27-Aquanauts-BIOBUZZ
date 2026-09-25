@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Hardware;
+import org.firstinspires.ftc.teamcode.mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.mechanisms.Launcher;
 
 @TeleOp(name = "TelOpV1", group = "Aquanauts")
@@ -13,10 +15,11 @@ public class MainTeleOp extends LinearOpMode {
     private boolean invertMode = false;
 
     //IMPORT HARDWARE
-    MainTeleOpHardware hardware = new MainTeleOpHardware();
+    Hardware hardware = new Hardware();
 
     //IMPORT LAUNCHER
     Launcher launcher;
+    Intake intake;
 
 
     public void runOpMode() {
@@ -24,6 +27,7 @@ public class MainTeleOp extends LinearOpMode {
         //DEFINE HARDWARE NAME
         hardware.init(hardwareMap);
         launcher = new Launcher(hardware);
+        intake = new Intake(hardware);
 
         telemetry.addLine("Initialized, waiting for start...");
         telemetry.update();
@@ -56,6 +60,8 @@ public class MainTeleOp extends LinearOpMode {
             telemetry.addData("Slow Mode", slowMode);
             telemetry.addData("Slow Mode Multiplier", slowModeMultiplier);
             telemetry.update();
+
+            launcher.runLauncher();
 
 
             // Left bumper enables slow mode (DRIVER)
@@ -95,6 +101,10 @@ public class MainTeleOp extends LinearOpMode {
 
             if(gamepad2.right_trigger_pressed) {
                 launcher.shoot();
+            }
+
+            if(gamepad2.left_trigger_pressed) {
+                intake.intake();
             }
 
         }
