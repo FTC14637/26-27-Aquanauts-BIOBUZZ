@@ -1,18 +1,14 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.mechanisms.Launcher;
-import org.firstinspires.ftc.teamcode.robot.Robot;
-import org.firstinspires.ftc.teamcode.robot.RobotOpMode;
 
-@TeleOp(name = "TelOpV1", group = "Aquanauts")
-@Disabled
-public class MainTeleOp extends RobotOpMode {
+@TeleOp(name = "OldTelOp", group = "Aquanauts")
+public class OldTeleOp extends LinearOpMode {
 
     private double slowModeMultiplier = 0.25; // Multiplier for slow mode speed
     private boolean slowMode = false;
@@ -25,24 +21,8 @@ public class MainTeleOp extends RobotOpMode {
     Launcher launcher;
     Intake intake;
 
-    @Override
-    public void init() {
-        super.init();
-    }
 
-    @Override
-    public void start() {
-        //initialize hardware
-    }
-
-    @Override
-    public void loop() {
-
-        super.loop();
-    }
-
-
-    /*public void runOpMode() {
+    public void runOpMode() {
 
         //DEFINE HARDWARE NAME
         hardware.init(hardwareMap);
@@ -118,7 +98,7 @@ public class MainTeleOp extends RobotOpMode {
             }
 
              */
-/*
+
             if(gamepad2.right_bumper) {
                 launcher.shoot();
             }
@@ -128,7 +108,6 @@ public class MainTeleOp extends RobotOpMode {
             }
 
         }
-    }*/
+    }
 }
-
 

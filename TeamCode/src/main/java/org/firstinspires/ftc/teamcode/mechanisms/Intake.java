@@ -1,14 +1,16 @@
 package org.firstinspires.ftc.teamcode.mechanisms;
 
 
-import org.firstinspires.ftc.teamcode.Hardware;
+import org.firstinspires.ftc.teamcode.robot.Robot;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 public class Intake {
 
-    private Hardware hardware;
+    private final DcMotorEx intake;
+    public Intake(Robot robot) {
 
-    public Intake(Hardware hardware) {
-        this.hardware = hardware;
+        intake = robot.hardwareMap.get(DcMotorEx.class, "intake");
+
     }
 
     private boolean INTAKE_ON = false;
@@ -21,9 +23,9 @@ public class Intake {
 
     public void runIntake() {
         if (INTAKE_ON) {
-            hardware.intake.setVelocity(1500);
+            intake.setVelocity(1500);
         } else {
-            hardware.intake.setPower(0);
+            intake.setPower(0);
         }
     }
 }

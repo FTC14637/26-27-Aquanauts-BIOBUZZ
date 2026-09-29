@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.mechanisms;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Hardware;
+import org.firstinspires.ftc.teamcode.robot.Robot;
 
 public class Launcher {
 
@@ -28,6 +29,10 @@ public class Launcher {
     private final int LAUNCHER_IN_RANGE_TIME = 250; // How long the launcher must be within the target RPM tolerance to launch (milliseconds)
 
     // Call this method from TeleOp when a button is pressed
+    public Launcher(Robot robot) {
+        //TODO initialize launcher here
+    }
+
     public void shoot() {
         if (state == LauncherState.IDLE) {
             state = LauncherState.SPEEDING_UP;
