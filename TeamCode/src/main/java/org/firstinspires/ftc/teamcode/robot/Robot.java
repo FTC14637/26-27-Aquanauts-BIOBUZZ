@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import com.bylazar.fullpanels.*;
-
 import com.pedropathing.ivy.Command;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -20,7 +19,6 @@ public class Robot {
     public Intake intake;
     public Launcher launcher;
     //public Limelight limelight;
-
     public Telemetry telemetry;
 
     public Robot(OpMode opMode) {

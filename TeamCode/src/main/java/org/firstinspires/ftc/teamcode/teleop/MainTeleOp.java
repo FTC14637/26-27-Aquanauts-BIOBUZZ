@@ -1,18 +1,16 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.mechanisms.Launcher;
-import org.firstinspires.ftc.teamcode.robot.Robot;
-import org.firstinspires.ftc.teamcode.robot.RobotOpMode;
+import org.firstinspires.ftc.teamcode.robot.CustomOpMode;
 
 @TeleOp(name = "TelOpV1", group = "Aquanauts")
 @Disabled
-public class MainTeleOp extends RobotOpMode {
+public class MainTeleOp extends CustomOpMode {
 
     private double slowModeMultiplier = 0.25; // Multiplier for slow mode speed
     private boolean slowMode = false;

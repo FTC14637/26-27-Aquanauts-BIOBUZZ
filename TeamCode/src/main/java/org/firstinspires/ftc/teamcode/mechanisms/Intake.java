@@ -2,30 +2,21 @@ package org.firstinspires.ftc.teamcode.mechanisms;
 
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
+import com.pedropathing.ivy.Command;
+import static com.pedropathing.ivy.commands.Commands.*;
+
+
 
 public class Intake {
 
-    private final DcMotorEx intake;
+    private DcMotor intake;
     public Intake(Robot robot) {
-
-        intake = robot.hardwareMap.get(DcMotorEx.class, "intake");
-
+        intake = robot.hardwareMap.get(DcMotor.class, "intake");
     }
 
     private boolean INTAKE_ON = false;
+    Command intakeOn = infinite(() -> intake.setPower(1));
 
-
-    // Call this method from TeleOp when a button is pressed
-    public void intake() {
-        INTAKE_ON = !INTAKE_ON;
-    }
-
-    public void runIntake() {
-        if (INTAKE_ON) {
-            intake.setVelocity(1500);
-        } else {
-            intake.setPower(0);
-        }
-    }
 }
