@@ -38,6 +38,10 @@ public class NewTeleOp extends CustomOpMode {
         );
         follower.update();
 
+        if (gamepad2.right_trigger_pressed) {
+            robot.intake.on();
+        };
+
         super.loop();
     }
 }

@@ -103,9 +103,12 @@ public class OldTeleOp extends LinearOpMode {
                 launcher.shoot();
             }
 
+            /*
             if(gamepad2.left_trigger_pressed) {
                 intake.intake();
             }
+
+             */
 
         }
     }
