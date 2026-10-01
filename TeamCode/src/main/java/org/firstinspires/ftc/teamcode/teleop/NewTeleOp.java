@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.teleop;
 
 import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.teamcode.mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.robot.CustomOpMode;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
@@ -12,7 +14,7 @@ public class NewTeleOp extends CustomOpMode {
     private boolean slowMode = false;
     private boolean invertMode = false;
 
-    Follower follower;
+    private Follower follower;
 
     @Override
     //Runs when you click it
@@ -37,8 +39,9 @@ public class NewTeleOp extends CustomOpMode {
                 gamepad1.right_stick_x
         );
         follower.update();
+        t
 
-        if (gamepad2.right_trigger_pressed) {
+        if (gamepad2.right_trigger_pressed && robot.intake.state != Intake.State.OFF) {
             robot.intake.on();
         };
 

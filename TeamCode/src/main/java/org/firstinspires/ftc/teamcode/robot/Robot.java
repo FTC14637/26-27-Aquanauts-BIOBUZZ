@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import com.bylazar.fullpanels.*;
-import com.pedropathing.ivy.Command;
+import com.pedropathing.ivy.Scheduler;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Hardware;

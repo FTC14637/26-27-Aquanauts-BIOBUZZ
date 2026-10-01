@@ -13,22 +13,37 @@ public class Intake {
         intake = robot.hardwareMap.get(DcMotor.class, "intake");
     }
 
+    public enum State {ON, OFF, REVERSE}
+    public State state = State.OFF;
+
     public Command on() {
-        return infinite(() -> intake.setPower(1)).requiring(intake);
+        return instant(() -> state=State.ON).requiring(intake);
     };
 
     public Command off() {
-        return infinite(() -> intake.setPower(0)).requiring(intake);
+        return instant(() -> state=State.OFF).requiring(intake);
     };
 
     public Command reverse() {
-        return infinite(() -> intake.setPower(-1)).requiring(intake);
+        return instant(() -> state=State.REVERSE).requiring(intake);
     };
 
     public Command loop() {
         return infinite(() -> {
-
-        }
-        )
+            switch(state){
+                case ON:
+                    intake.setPower(1);
+                    break;
+                case OFF:
+                    intake.setPower(0);
+                    break;
+                case REVERSE:
+                    intake.setPower(-1);
+                    break;
+            }
+        });
     }
+
+
+
 }
