@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.robot.CustomOpMode;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
+import org.firstinspires.ftc.teamcode.robot.Robot;
 
 @TeleOp(name = "TeleOp", group = "Advanced")
 public class NewTeleOp extends CustomOpMode {
@@ -15,11 +16,12 @@ public class NewTeleOp extends CustomOpMode {
     private boolean invertMode = false;
 
     private Follower follower;
+    private Robot robot;
 
     @Override
     //Runs when you click it
     public void init() {
-        follower = Constants.create(hardwareMap);
+        follower = Constants.create(Robot.hardwareMap);
         super.init();
     }
 
@@ -34,12 +36,11 @@ public class NewTeleOp extends CustomOpMode {
     public void loop() {
 
         follower.manual(
-                (invertMode ? 1 : -1) * gamepad1.left_stick_y,
-                gamepad1.left_stick_x,
-                gamepad1.right_stick_x
+                (invertMode ? 1 : -1) *  (slowMode ? slowModeMultiplier : 1) * gamepad1.left_stick_y,
+                (slowMode ? slowModeMultiplier : 1) * gamepad1.left_stick_x,
+                (slowMode ? slowModeMultiplier : 1) * gamepad1.right_stick_x
         );
         follower.update();
-        t
 
         if (gamepad2.right_trigger_pressed && robot.intake.state != Intake.State.OFF) {
             robot.intake.on();

@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.mechanisms.Intake;
 
 public class Robot {
 
-    public final HardwareMap hardwareMap;
+    public static HardwareMap hardwareMap;
     public Intake intake;
     public Launcher launcher;
     //public Limelight limelight;
