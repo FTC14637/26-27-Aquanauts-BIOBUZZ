@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.robot.CustomOpMode;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
-import org.firstinspires.ftc.teamcode.robot.Robot;
 
 @TeleOp(name = "TeleOp", group = "Advanced")
 public class NewTeleOp extends CustomOpMode {
@@ -16,19 +15,18 @@ public class NewTeleOp extends CustomOpMode {
     private boolean invertMode = false;
 
     private Follower follower;
-    private Robot robot;
 
     @Override
     //Runs when you click it
     public void init() {
-        follower = Constants.create(Robot.hardwareMap);
         super.init();
+        follower = Constants.create(robot.hardwareMap);
     }
 
     @Override
     //Runs on start
     public void start() {
-        //TODO limelight
+
     }
 
     @Override
