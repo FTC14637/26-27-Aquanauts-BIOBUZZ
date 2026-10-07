@@ -1,49 +1,78 @@
 package org.firstinspires.ftc.teamcode.auto;
 
-import com.pedropathing.follower.Follower;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.mechanisms.Intake;
-import org.firstinspires.ftc.teamcode.pedro.Constants;
-import org.firstinspires.ftc.teamcode.robot.CustomOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@TeleOp(name = "TeleOp", group = "Advanced")
-public class HardAuto extends CustomOpMode {
+import org.firstinspires.ftc.teamcode.Hardware;
 
-    private double slowModeMultiplier = 0.25; // Multiplier for slow mode speed
-    private boolean slowMode = false;
-    private boolean invertMode = false;
+@Autonomous(name = "HardAuto", group = "Aqua")
+public class HardAuto extends LinearOpMode {
+    //IMPORT HARDWARE
+    Hardware hardware = new Hardware();
 
-    private Follower follower;
+    public void runOpMode() {
 
-    @Override
-    //Runs when you click it
-    public void init() {
-        super.init();
-        follower = Constants.create(robot.hardwareMap);
+        hardware.init(hardwareMap);
+
+        waitForStart();
+        if(isStopRequested()) return; // Stops if stopped is pressed
+        // Drives wheels
+        while(opModeIsActive()) {
+            stright(1, 750);
+            sideLeft(1,750);
+            back(1, 750);
+
+            telemetry.update();
+        }
     }
 
-    @Override
-    //Runs on start
-    public void start() {
-
+    private void stright(double speed, long time) {
+        hardware.frontLeft.setPower(speed);
+        hardware.frontRight.setPower(speed);
+        hardware.backLeft.setPower(speed);
+        hardware.backRight.setPower(speed);
+        sleep(time);
+        hardware.frontLeft.setPower(0);
+        hardware.frontRight.setPower(0);
+        hardware.backLeft.setPower(0);
+        hardware.backRight.setPower(0);
     }
 
-    @Override
-    //Main loop
-    public void loop() {
+    private void back(double speed, long time) {
+        hardware.frontLeft.setPower(-speed);
+        hardware.frontRight.setPower(-speed);
+        hardware.backLeft.setPower(-speed);
+        hardware.backRight.setPower(-speed);
+        sleep(time);
+        hardware.frontLeft.setPower(0);
+        hardware.frontRight.setPower(0);
+        hardware.backLeft.setPower(0);
+        hardware.backRight.setPower(0);
+    }
 
-        follower.manual(
-                (invertMode ? 1 : -1) *  (slowMode ? slowModeMultiplier : 1) * gamepad1.left_stick_y,
-                (slowMode ? slowModeMultiplier : 1) * gamepad1.left_stick_x,
-                (slowMode ? slowModeMultiplier : 1) * gamepad1.right_stick_x
-        );
-        follower.update();
+    private void sideRight(double speed, long time) {
+        hardware.frontLeft.setPower(-speed);
+        hardware.frontRight.setPower(speed);
+        hardware.backLeft.setPower(-speed);
+        hardware.backRight.setPower(speed);
+        sleep(time);
+        hardware.frontLeft.setPower(0);
+        hardware.frontRight.setPower(0);
+        hardware.backLeft.setPower(0);
+        hardware.backRight.setPower(0);
+    }
 
-        if (gamepad2.right_trigger_pressed && robot.intake.state != Intake.State.OFF) {
-            robot.intake.on();
-        };
-
-        super.loop();
+    private void sideLeft(double speed, long time) {
+        hardware.frontLeft.setPower(speed);
+        hardware.frontRight.setPower(-speed);
+        hardware.backLeft.setPower(speed);
+        hardware.backRight.setPower(-speed);
+        sleep(time);
+        hardware.frontLeft.setPower(0);
+        hardware.frontRight.setPower(0);
+        hardware.backLeft.setPower(0);
+        hardware.backRight.setPower(0);
     }
 }
+

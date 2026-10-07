@@ -19,8 +19,6 @@ public class Robot {
     public Launcher launcher;
     public Telemetry telemetry;
 
-
-
     public Robot(OpMode opMode) {
         hardwareMap = opMode.hardwareMap;
 

@@ -1,26 +1,24 @@
 package org.firstinspires.ftc.teamcode.mechanisms;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 
-public class Launcher {
+import com.pedropathing.ivy.Command;
+import static com.pedropathing.ivy.commands.Commands.*;
 
-    private Hardware hardware;
+public class Launcher extends Robot {
 
-    public Launcher(Hardware hardware) {
-        this.hardware = hardware;
+
+    private final DcMotorEx launcherFlyWheel;
+    public Launcher(Robot robot) {
+        launcherFlyWheel = robot.hardwareMap.get(DcMotorEx.class, "launcherFlyWheel");
     }
 
     public enum LauncherState {IDLE, SPEEDING_UP, LAUNCHING}
 
     private LauncherState state = LauncherState.IDLE;
-
-    // GET METHOD
-    public LauncherState getState() {
-        return state;
-    }
 
     private final ElapsedTime inToleranceTimer = new ElapsedTime();
 
@@ -28,10 +26,8 @@ public class Launcher {
     private final int LAUNCHER_TOLERANCE = 100; // Tolerance of RPM required for launch
     private final int LAUNCHER_IN_RANGE_TIME = 250; // How long the launcher must be within the target RPM tolerance to launch (milliseconds)
 
-    // Call this method from TeleOp when a button is pressed
-    public Launcher(Robot robot) {
-        //TODO initialize launcher here
-    }
+    //Ivy Commands
+
 
     public void shoot() {
         if (state == LauncherState.IDLE) {
@@ -40,18 +36,19 @@ public class Launcher {
         }
     }
 
+
     public void runLauncher() {
         switch (state) {
             case IDLE:
-                hardware.launcherFlyWheel.setPower(0);
+                launcherFlyWheel.setPower(0);
                 //TODO add close gate to stop balls from launching
                 break;
 
             case SPEEDING_UP:
-                hardware.launcherFlyWheel.setVelocity(TARGET_LAUNCHER_VELOCITY);
+                launcherFlyWheel.setVelocity(TARGET_LAUNCHER_VELOCITY);
 
                 // Check if flywheel is fast enough (with a small tolerance)
-                if (Math.abs(hardware.launcherFlyWheel.getVelocity() - TARGET_LAUNCHER_VELOCITY) <= LAUNCHER_TOLERANCE) {
+                if (Math.abs(launcherFlyWheel.getVelocity() - TARGET_LAUNCHER_VELOCITY) <= LAUNCHER_TOLERANCE) {
                     // If the flywheel has been stable in range for long enough, transition to launch
                     if (inToleranceTimer.milliseconds() >= LAUNCHER_IN_RANGE_TIME) {
                         state = LauncherState.LAUNCHING;
@@ -63,7 +60,7 @@ public class Launcher {
                 break;
 
             case LAUNCHING:
-                hardware.launcherFlyWheel.setVelocity(TARGET_LAUNCHER_VELOCITY);
+                launcherFlyWheel.setVelocity(TARGET_LAUNCHER_VELOCITY);
 
                 //TODO open gate
 

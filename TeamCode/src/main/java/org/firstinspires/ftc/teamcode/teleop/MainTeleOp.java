@@ -62,6 +62,22 @@ public class MainTeleOp extends CustomOpMode {
 
         telemetry.addData("Invert Mode: ", invertMode);
         telemetry.addData("Slow Mode: ", slowMode);
+
+        if (gamepad2.leftTriggerWasPressed()) {
+            //launch
+        }
+
+        if (gamepad2.leftBumperWasPressed()) {
+            //lancher on
+        }
+
+        if (gamepad2.rightBumperWasPressed() &&  intake.state == Intake.State.OFF) {
+            intake.on();
+        }
+
+        if (gamepad2.rightBumperWasPressed() &&  intake.state == Intake.State.ON) {
+            intake.off();
+        }
     }
 }
 
