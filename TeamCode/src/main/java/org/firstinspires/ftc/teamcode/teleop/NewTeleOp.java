@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
 import com.pedropathing.follower.Follower;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.robot.CustomOpMode;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
+@Disabled
 @TeleOp(name = "TeleOp", group = "Advanced")
 public class NewTeleOp extends CustomOpMode {
 

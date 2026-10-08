@@ -8,16 +8,17 @@ import org.firstinspires.ftc.teamcode.Hardware;
 
 @Autonomous(name = "HardAuto", group = "Aqua")
 public class HardAuto extends LinearOpMode {
-    //IMPORT HARDWARE
+
     Hardware hardware = new Hardware();
 
+    @Override
     public void runOpMode() {
 
         hardware.init(hardwareMap);
 
         waitForStart();
         if(isStopRequested()) return; // Stops if stopped is pressed
-        // Drives wheels
+
         while(opModeIsActive()) {
             stright(1, 750);
             sideLeft(1,750);

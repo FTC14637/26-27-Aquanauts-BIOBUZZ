@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.mechanisms.Launcher;
 import org.firstinspires.ftc.teamcode.robot.CustomOpMode;
 
 @TeleOp(name = "TelOpV1", group = "Aquanauts")
-@Disabled
+
 public class MainTeleOp extends CustomOpMode {
 
     private double slowModeMultiplier = 0.25; // Multiplier for slow mode speed
@@ -28,7 +28,7 @@ public class MainTeleOp extends CustomOpMode {
         super.init();
 
         hardware.init(hardwareMap);
-        launcher = new Launcher(hardware);
+        //launcher = new Launcher(hardwareMap);
 
         telemetry.addLine("Initialized, waiting for start...");
     }

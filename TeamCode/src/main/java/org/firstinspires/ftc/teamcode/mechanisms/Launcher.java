@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
 import com.pedropathing.ivy.Command;
 import static com.pedropathing.ivy.commands.Commands.*;
 
-public class Launcher extends Robot {
+public class Launcher {
 
 
     private final DcMotorEx launcherFlyWheel;
@@ -16,9 +16,9 @@ public class Launcher extends Robot {
         launcherFlyWheel = robot.hardwareMap.get(DcMotorEx.class, "launcherFlyWheel");
     }
 
-    public enum LauncherState {IDLE, SPEEDING_UP, LAUNCHING}
+    public enum State {IDLE, SPEEDING_UP, READY, LAUNCHING}
 
-    private LauncherState state = LauncherState.IDLE;
+    private State state = State.IDLE;
 
     private final ElapsedTime inToleranceTimer = new ElapsedTime();
 
@@ -30,11 +30,22 @@ public class Launcher extends Robot {
 
 
     public void shoot() {
-        if (state == LauncherState.IDLE) {
-            state = LauncherState.SPEEDING_UP;
+        if (state == State.IDLE) {
+            state = State.SPEEDING_UP;
             inToleranceTimer.reset();
         }
     }
+
+    public Command on() {return instant(() -> state= State.SPEEDING_UP).requiring(launcherFlyWheel);};
+
+    public Command launch() {
+        return instant(() -> state= State.LAUNCHING).requiring(launcherFlyWheel);
+    };
+
+    public Command off() {
+        return instant(() -> state= State.IDLE).requiring(launcherFlyWheel);
+    };
+
 
 
     public void runLauncher() {
@@ -51,12 +62,19 @@ public class Launcher extends Robot {
                 if (Math.abs(launcherFlyWheel.getVelocity() - TARGET_LAUNCHER_VELOCITY) <= LAUNCHER_TOLERANCE) {
                     // If the flywheel has been stable in range for long enough, transition to launch
                     if (inToleranceTimer.milliseconds() >= LAUNCHER_IN_RANGE_TIME) {
-                        state = LauncherState.LAUNCHING;
+                        state = State.READY;
                         inToleranceTimer.reset(); // Reuse the timer to track how long the gate stays open
                     }
                 } else {
                     inToleranceTimer.reset();
                 }
+                break;
+
+            case READY:
+
+                launcherFlyWheel.setVelocity(TARGET_LAUNCHER_VELOCITY);
+                inToleranceTimer.reset();
+
                 break;
 
             case LAUNCHING:
