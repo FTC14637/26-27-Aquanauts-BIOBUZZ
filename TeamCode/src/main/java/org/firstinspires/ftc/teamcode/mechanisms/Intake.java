@@ -6,9 +6,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.pedropathing.ivy.Command;
 import static com.pedropathing.ivy.commands.Commands.*;
 
+
 public class Intake {
 
     private final DcMotor intake;
+
     public Intake(Robot robot) {
         intake = robot.hardwareMap.get(DcMotor.class, "intake");
     }

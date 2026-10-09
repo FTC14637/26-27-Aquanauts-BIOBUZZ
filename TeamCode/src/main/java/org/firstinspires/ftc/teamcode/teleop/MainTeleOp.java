@@ -16,12 +16,9 @@ public class MainTeleOp extends CustomOpMode {
     private boolean slowMode = false;
     private boolean invertMode = false;
 
-    //IMPORT HARDWARE
     Hardware hardware = new Hardware();
-
-    //IMPORT LAUNCHER
-    Launcher launcher;
-    Intake intake;
+    //Launcher launcher;
+    //Intake intake;
 
     @Override
     public void init() {
@@ -62,6 +59,7 @@ public class MainTeleOp extends CustomOpMode {
 
         telemetry.addData("Invert Mode: ", invertMode);
         telemetry.addData("Slow Mode: ", slowMode);
+        telemetry.addData("Intake: ", robot.intake.state);
 
         if (gamepad2.leftTriggerWasPressed()) {
             //launch
@@ -71,12 +69,16 @@ public class MainTeleOp extends CustomOpMode {
             //lancher on
         }
 
-        if (gamepad2.rightBumperWasPressed() &&  intake.state == Intake.State.OFF) {
-            intake.on();
+        if (gamepad2.rightBumperWasPressed() &&  robot.intake.state == Intake.State.OFF) {
+            robot.intake.on().schedule();
         }
 
-        if (gamepad2.rightBumperWasPressed() &&  intake.state == Intake.State.ON) {
-            intake.off();
+        if (gamepad2.rightTriggerWasPressed() &&  robot.intake.state == Intake.State.ON) {
+            robot.intake.off().schedule();
+        }
+
+        if (gamepad2.yWasPressed() &&  (robot.intake.state == Intake.State.OFF || robot.intake.state == Intake.State.ON)) {
+            robot.intake.reverse().schedule();
         }
     }
 }

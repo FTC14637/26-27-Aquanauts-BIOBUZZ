@@ -21,6 +21,7 @@ public class Robot {
 
     public Robot(OpMode opMode) {
         hardwareMap = opMode.hardwareMap;
+        telemetry = opMode.telemetry;
 
         intake = new Intake(this);
         launcher = new Launcher(this);
