@@ -12,10 +12,6 @@ import org.firstinspires.ftc.teamcode.robot.CustomOpMode;
 
 public class MainTeleOp extends CustomOpMode {
 
-    private double slowModeMultiplier = 0.25; // Multiplier for slow mode speed
-    private boolean slowMode = false;
-    private boolean invertMode = false;
-
     Hardware hardware = new Hardware();
     //Launcher launcher;
     //Intake intake;
@@ -38,6 +34,10 @@ public class MainTeleOp extends CustomOpMode {
     @Override
     public void loop() {
         super.loop();
+
+        double slowModeMultiplier = 0.25; // Multiplier for slow mode speed
+        boolean slowMode = false;
+        boolean invertMode = false;
 
         double y = (invertMode ? 1 : -1) * gamepad1.left_stick_y;
         double x = gamepad1.left_stick_x;
@@ -69,12 +69,20 @@ public class MainTeleOp extends CustomOpMode {
             //lancher on
         }
 
-        if (gamepad2.rightBumperWasPressed() &&  robot.intake.state == Intake.State.OFF) {
-            robot.intake.on().schedule();
+        if (gamepad1.rightTriggerWasPressed()) {
+            slowMode = !slowMode;
         }
 
-        if (gamepad2.rightTriggerWasPressed() &&  robot.intake.state == Intake.State.ON) {
-            robot.intake.off().schedule();
+        if (gamepad1.rightBumperWasPressed()) {
+            invertMode = !invertMode;
+        }
+
+        if (gamepad2.rightBumperWasPressed()) {
+            if(robot.intake.state == Intake.State.OFF) {
+                robot.intake.on().schedule();
+            } else if (robot.intake.state ==  Intake.State.ON || robot.intake.state == Intake.State.REVERSE) {
+                robot.intake.off().schedule();
+            }
         }
 
         if (gamepad2.yWasPressed() &&  (robot.intake.state == Intake.State.OFF || robot.intake.state == Intake.State.ON)) {

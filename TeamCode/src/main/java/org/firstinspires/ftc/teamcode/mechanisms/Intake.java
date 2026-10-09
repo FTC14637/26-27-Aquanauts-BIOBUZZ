@@ -34,13 +34,13 @@ public class Intake {
         return infinite(() -> {
             switch(state){
                 case ON:
-                    intake.setPower(1);
+                    intake.setPower(0.1);
                     break;
                 case OFF:
                     intake.setPower(0);
                     break;
                 case REVERSE:
-                    intake.setPower(-1);
+                    intake.setPower(-0.1);
                     break;
             }
         });
