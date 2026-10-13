@@ -1,25 +1,24 @@
 package org.firstinspires.ftc.teamcode.mechanisms;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.teamcode.robot.Robot;
 
-import org.firstinspires.ftc.teamcode.Hardware;
+import com.pedropathing.ivy.Command;
+import static com.pedropathing.ivy.commands.Commands.*;
 
 public class Launcher {
 
-    private Hardware hardware;
 
-    public Launcher(Hardware hardware) {
-        this.hardware = hardware;
+    private final DcMotorEx launcherFlyWheel;
+    public Launcher(Robot robot) {
+        launcherFlyWheel = robot.hardwareMap.get(DcMotorEx.class, "launcherFlyWheel");
     }
 
-    public enum LauncherState {IDLE, SPEEDING_UP, LAUNCHING}
+    public enum State {IDLE, SPEEDING_UP, READY, LAUNCHING}
 
-    private LauncherState state = LauncherState.IDLE;
-
-    // GET METHOD
-    public LauncherState getState() {
-        return state;
-    }
+    private State state = State.IDLE;
 
     private final ElapsedTime inToleranceTimer = new ElapsedTime();
 
@@ -27,29 +26,43 @@ public class Launcher {
     private final int LAUNCHER_TOLERANCE = 100; // Tolerance of RPM required for launch
     private final int LAUNCHER_IN_RANGE_TIME = 250; // How long the launcher must be within the target RPM tolerance to launch (milliseconds)
 
-    // Call this method from TeleOp when a button is pressed
+    //Ivy Commands
+
+
     public void shoot() {
-        if (state == LauncherState.IDLE) {
-            state = LauncherState.SPEEDING_UP;
+        if (state == State.IDLE) {
+            state = State.SPEEDING_UP;
             inToleranceTimer.reset();
         }
     }
 
+    public Command on() {return instant(() -> state= State.SPEEDING_UP).requiring(launcherFlyWheel);};
+
+    public Command launch() {
+        return instant(() -> state= State.LAUNCHING).requiring(launcherFlyWheel);
+    };
+
+    public Command off() {
+        return instant(() -> state= State.IDLE).requiring(launcherFlyWheel);
+    };
+
+
+
     public void runLauncher() {
         switch (state) {
             case IDLE:
-                hardware.launcherFlyWheel.setPower(0);
+                launcherFlyWheel.setPower(0);
                 //TODO add close gate to stop balls from launching
                 break;
 
             case SPEEDING_UP:
-                hardware.launcherFlyWheel.setVelocity(TARGET_LAUNCHER_VELOCITY);
+                launcherFlyWheel.setVelocity(TARGET_LAUNCHER_VELOCITY);
 
                 // Check if flywheel is fast enough (with a small tolerance)
-                if (Math.abs(hardware.launcherFlyWheel.getVelocity() - TARGET_LAUNCHER_VELOCITY) <= LAUNCHER_TOLERANCE) {
+                if (Math.abs(launcherFlyWheel.getVelocity() - TARGET_LAUNCHER_VELOCITY) <= LAUNCHER_TOLERANCE) {
                     // If the flywheel has been stable in range for long enough, transition to launch
                     if (inToleranceTimer.milliseconds() >= LAUNCHER_IN_RANGE_TIME) {
-                        state = LauncherState.LAUNCHING;
+                        state = State.READY;
                         inToleranceTimer.reset(); // Reuse the timer to track how long the gate stays open
                     }
                 } else {
@@ -57,8 +70,15 @@ public class Launcher {
                 }
                 break;
 
+            case READY:
+
+                launcherFlyWheel.setVelocity(TARGET_LAUNCHER_VELOCITY);
+                inToleranceTimer.reset();
+
+                break;
+
             case LAUNCHING:
-                hardware.launcherFlyWheel.setVelocity(TARGET_LAUNCHER_VELOCITY);
+                launcherFlyWheel.setVelocity(TARGET_LAUNCHER_VELOCITY);
 
                 //TODO open gate
 

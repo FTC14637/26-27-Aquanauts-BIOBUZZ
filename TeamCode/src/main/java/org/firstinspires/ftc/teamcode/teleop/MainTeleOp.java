@@ -1,112 +1,97 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.mechanisms.Launcher;
+import org.firstinspires.ftc.teamcode.robot.CustomOpMode;
 
 @TeleOp(name = "TelOpV1", group = "Aquanauts")
-public class MainTeleOp extends LinearOpMode {
 
-    private double slowModeMultiplier = 0.25; // Multiplier for slow mode speed
-    private boolean slowMode = false;
-    private boolean invertMode = false;
+public class MainTeleOp extends CustomOpMode {
 
-    //IMPORT HARDWARE
     Hardware hardware = new Hardware();
+    //Launcher launcher;
+    //Intake intake;
 
-    //IMPORT LAUNCHER
-    Launcher launcher;
-    Intake intake;
+    double slowModeMultiplier = 0.25; // Multiplier for slow mode speed
+    boolean slowMode = false;
+    boolean invertMode = false;
 
 
-    public void runOpMode() {
+    @Override
+    public void init() {
+        super.init();
 
-        //DEFINE HARDWARE NAME
         hardware.init(hardwareMap);
-        launcher = new Launcher(hardware);
-        intake = new Intake(hardware);
+        //launcher = new Launcher(hardwareMap);
 
         telemetry.addLine("Initialized, waiting for start...");
-        telemetry.update();
+    }
 
-        waitForStart();
-        if(isStopRequested()) return; // Stops if stopped is pressed
+    @Override
+    public void start() {
 
-        // Controls
-        while(opModeIsActive()) {
+    }
 
-            double y = (invertMode ? 1 : -1) * gamepad1.left_stick_y;
-            double x = gamepad1.left_stick_x;
-            double rx = gamepad1.right_stick_x;
+    @Override
+    public void loop() {
+        super.loop();
 
-            y = y * (slowMode ? slowModeMultiplier : 1.0);
-            x = x * (slowMode ? slowModeMultiplier : 1.0);
-            rx = rx * (slowMode ? slowModeMultiplier : 1.0);
+        double y = (invertMode? 1 : -1)*gamepad1.left_stick_y;
+        double x = gamepad1.left_stick_x;
+        double rx = gamepad1.right_stick_x;
 
-            double frontLeftPower = y + x + rx;
-            double backLeftPower = y - x + rx;
-            double frontRightPower = y - x - rx;
-            double backRightPower = y + x - rx;
+        y = y * (slowMode ? slowModeMultiplier : 1.0);
+        x = x * (slowMode ? slowModeMultiplier : 1.0);
+        rx = rx * (slowMode ? slowModeMultiplier : 1.0);
 
-            hardware.frontLeft.setPower(frontLeftPower);
-            hardware.backLeft.setPower(backLeftPower);
-            hardware.frontRight.setPower(frontRightPower);
-            hardware.backRight.setPower(backRightPower);
+        double frontLeftPower = y + x + rx;
+        double backLeftPower = y - x + rx;
+        double frontRightPower = y - x - rx;
+        double backRightPower = y + x - rx;
 
-            telemetry.addData("Invert mode", invertMode);
-            telemetry.addData("Slow Mode", slowMode);
-            telemetry.addData("Slow Mode Multiplier", slowModeMultiplier);
-            telemetry.update();
+        hardware.frontLeft.setPower(frontLeftPower);
+        hardware.backLeft.setPower(backLeftPower);
+        hardware.frontRight.setPower(frontRightPower);
+        hardware.backRight.setPower(backRightPower);
 
-            launcher.runLauncher();
+        telemetry.addData("Invert Mode: ", invertMode);
+        telemetry.addData("Slow Mode: ", slowMode);
+        telemetry.addData("Intake: ", robot.intake.state);
+        telemetry.addData("FLP: ", frontLeftPower);
+        telemetry.addData("BLP: ", backLeftPower);
+        telemetry.addData("FRP: ", frontRightPower);
+        telemetry.addData("BRP: ,", backRightPower);
 
+        if (gamepad2.leftTriggerWasPressed()) {
+            //launch
+        }
 
-            // Left bumper enables slow mode (DRIVER)
-            if (gamepad1.rightBumperWasPressed()) {
-                slowMode = !slowMode;
+        if (gamepad2.leftBumperWasPressed()) {
+            //lancher on
+        }
+
+        if (gamepad1.rightTriggerWasPressed()) {
+            slowMode = !slowMode;
+        }
+
+        if (gamepad1.aWasPressed()) {
+            invertMode =!invertMode;
+        }
+
+        if (gamepad1.rightBumperWasPressed()) {
+            if(robot.intake.state == Intake.State.OFF) {
+                robot.intake.on().schedule();
+            } else if (robot.intake.state ==  Intake.State.ON || robot.intake.state == Intake.State.REVERSE) {
+                robot.intake.off().schedule();
             }
+        }
 
-            // Right Bumper Invert (DRIVER)
-            if (gamepad1.leftBumperWasPressed()) {
-                invertMode = !invertMode;
-            }
-
-            // D pad Up: Higher slow mode speed (DRIVER)
-            if (gamepad1.dpadUpWasPressed()) {
-                slowModeMultiplier += 0.25;
-                if (slowModeMultiplier > 1) {
-                    slowModeMultiplier = 1;
-                }
-            }
-
-
-            // D Pad Down: Lower slow mode speed (DRIVER)
-            if (gamepad1.dpadDownWasPressed()) {
-                slowModeMultiplier -= 0.25;
-                if (slowModeMultiplier < 0.25) {
-                    slowModeMultiplier = 0.25;
-                }
-            }
-
-            /*
-            // Right trigger sets a servo power (OPERATOR)
-            if(gamepad2.right_trigger_pressed) {
-                hardware.crServo.setPower(100);
-            }
-
-             */
-
-            if(gamepad2.right_bumper) {
-                launcher.shoot();
-            }
-
-            if(gamepad2.left_trigger_pressed) {
-                intake.intake();
-            }
-
+        if (gamepad1.yWasPressed() &&  (robot.intake.state == Intake.State.OFF || robot.intake.state == Intake.State.ON)) {
+            robot.intake.reverse().schedule();
         }
     }
 }
