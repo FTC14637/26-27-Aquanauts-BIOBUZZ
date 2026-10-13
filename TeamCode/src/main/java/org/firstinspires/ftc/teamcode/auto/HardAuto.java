@@ -11,7 +11,6 @@ public class HardAuto extends LinearOpMode {
 
     Hardware hardware = new Hardware();
 
-    @Override
     public void runOpMode() {
 
         hardware.init(hardwareMap);
@@ -19,10 +18,10 @@ public class HardAuto extends LinearOpMode {
         waitForStart();
         if(isStopRequested()) return; // Stops if stopped is pressed
 
-        while(opModeIsActive()) {
-            stright(1, 750);
-            sideLeft(1,750);
-            back(1, 750);
+        if(opModeIsActive()) {
+            stright(0.25, 750);
+            sideRight(0.25,1100);
+            back(.25, 750);
 
             telemetry.update();
         }

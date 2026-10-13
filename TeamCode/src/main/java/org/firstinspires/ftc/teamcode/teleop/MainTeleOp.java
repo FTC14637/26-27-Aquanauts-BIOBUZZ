@@ -16,6 +16,11 @@ public class MainTeleOp extends CustomOpMode {
     //Launcher launcher;
     //Intake intake;
 
+    double slowModeMultiplier = 0.25; // Multiplier for slow mode speed
+    boolean slowMode = false;
+    boolean invertMode = false;
+
+
     @Override
     public void init() {
         super.init();
@@ -35,11 +40,7 @@ public class MainTeleOp extends CustomOpMode {
     public void loop() {
         super.loop();
 
-        double slowModeMultiplier = 0.25; // Multiplier for slow mode speed
-        boolean slowMode = false;
-        boolean invertMode = false;
-
-        double y = (invertMode ? 1 : -1) * gamepad1.left_stick_y;
+        double y = (invertMode? 1 : -1)*gamepad1.left_stick_y;
         double x = gamepad1.left_stick_x;
         double rx = gamepad1.right_stick_x;
 
@@ -60,6 +61,10 @@ public class MainTeleOp extends CustomOpMode {
         telemetry.addData("Invert Mode: ", invertMode);
         telemetry.addData("Slow Mode: ", slowMode);
         telemetry.addData("Intake: ", robot.intake.state);
+        telemetry.addData("FLP: ", frontLeftPower);
+        telemetry.addData("BLP: ", backLeftPower);
+        telemetry.addData("FRP: ", frontRightPower);
+        telemetry.addData("BRP: ,", backRightPower);
 
         if (gamepad2.leftTriggerWasPressed()) {
             //launch
@@ -73,11 +78,11 @@ public class MainTeleOp extends CustomOpMode {
             slowMode = !slowMode;
         }
 
-        if (gamepad1.rightBumperWasPressed()) {
-            invertMode = !invertMode;
+        if (gamepad1.aWasPressed()) {
+            invertMode =!invertMode;
         }
 
-        if (gamepad2.rightBumperWasPressed()) {
+        if (gamepad1.rightBumperWasPressed()) {
             if(robot.intake.state == Intake.State.OFF) {
                 robot.intake.on().schedule();
             } else if (robot.intake.state ==  Intake.State.ON || robot.intake.state == Intake.State.REVERSE) {
@@ -85,7 +90,7 @@ public class MainTeleOp extends CustomOpMode {
             }
         }
 
-        if (gamepad2.yWasPressed() &&  (robot.intake.state == Intake.State.OFF || robot.intake.state == Intake.State.ON)) {
+        if (gamepad1.yWasPressed() &&  (robot.intake.state == Intake.State.OFF || robot.intake.state == Intake.State.ON)) {
             robot.intake.reverse().schedule();
         }
     }
