@@ -1,34 +1,36 @@
 package org.firstinspires.ftc.teamcode.mechanisms;
 
+import org.firstinspires.ftc.teamcode.robot.Robot;
+
+//Ivy
 import com.pedropathing.ivy.Command;
 import static com.pedropathing.ivy.commands.Commands.*;
 
-import com.qualcomm.robotcore.hardware.CRServo;
+//Hardware
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.firstinspires.ftc.teamcode.robot.Robot;
-
+//The wiper/arm on the back of the robot.
 public class Wiper {
 
+    //Declarations
     private final Servo wiper;
-
     public Wiper(Robot robot) {
         wiper = robot.hardwareMap.get(Servo.class, "wiper");
     }
 
+    //States
     public enum State {RETRACTED, EXTENDED, IDLE}
     public State state = State.IDLE;
 
+    //Commands
     public Command extend() {
         return instant(() -> state=State.EXTENDED).requiring(wiper);
     };
-
     public Command retract() {
         return instant(() -> state=State.RETRACTED).requiring(wiper);
     };
 
+    //Main loop
     public Command loop() {
         return infinite(() -> {
             switch(state){
