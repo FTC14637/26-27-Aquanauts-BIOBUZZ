@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Hardware;
@@ -13,8 +12,6 @@ import org.firstinspires.ftc.teamcode.robot.CustomOpMode;
 public class MainTeleOp extends CustomOpMode {
 
     Hardware hardware = new Hardware();
-    //Launcher launcher;
-    //Intake intake;
 
     double slowModeMultiplier = 0.25; // Multiplier for slow mode speed
     boolean slowMode = false;
@@ -26,7 +23,6 @@ public class MainTeleOp extends CustomOpMode {
         super.init();
 
         hardware.init(hardwareMap);
-        //launcher = new Launcher(hardwareMap);
 
         telemetry.addLine("Initialized, waiting for start...");
     }
@@ -61,28 +57,44 @@ public class MainTeleOp extends CustomOpMode {
         telemetry.addData("Invert Mode: ", invertMode);
         telemetry.addData("Slow Mode: ", slowMode);
         telemetry.addData("Intake: ", robot.intake.state);
+        telemetry.addData("Launcher: ", robot.launcher.state);
         telemetry.addData("FLP: ", frontLeftPower);
         telemetry.addData("BLP: ", backLeftPower);
         telemetry.addData("FRP: ", frontRightPower);
         telemetry.addData("BRP: ,", backRightPower);
 
-        if (gamepad2.leftTriggerWasPressed()) {
-            //launch
+        if (gamepad2.leftBumperWasPressed() && robot.launcher.state == Launcher.State.IDLE) {
+            robot.launcher.on();
+            //launcher on
         }
 
-        if (gamepad2.leftBumperWasPressed()) {
-            //lancher on
+        if (gamepad2.leftTriggerWasPressed() && robot.launcher.state == Launcher.State.READY) {
+            //launcher lauch
+            robot.launcher.launch();
+        }
+
+        if (gamepad1.bWasPressed()) {
+            //extend
+            robot.wiper.extend().schedule();
+        }
+
+        if (gamepad1.xWasPressed()) {
+            //retract wiper
+            robot.wiper.retract().schedule();
         }
 
         if (gamepad1.rightTriggerWasPressed()) {
+            //slow mode
             slowMode = !slowMode;
         }
 
         if (gamepad1.aWasPressed()) {
+            //invert mode
             invertMode =!invertMode;
         }
 
-        if (gamepad1.rightBumperWasPressed()) {
+        if (gamepad2.rightBumperWasPressed()) {
+            //intake toggle
             if(robot.intake.state == Intake.State.OFF) {
                 robot.intake.on().schedule();
             } else if (robot.intake.state ==  Intake.State.ON || robot.intake.state == Intake.State.REVERSE) {
@@ -90,7 +102,8 @@ public class MainTeleOp extends CustomOpMode {
             }
         }
 
-        if (gamepad1.yWasPressed() &&  (robot.intake.state == Intake.State.OFF || robot.intake.state == Intake.State.ON)) {
+        if (gamepad2.yWasPressed() &&  (robot.intake.state == Intake.State.OFF || robot.intake.state == Intake.State.ON)) {
+            //reverse intake
             robot.intake.reverse().schedule();
         }
     }

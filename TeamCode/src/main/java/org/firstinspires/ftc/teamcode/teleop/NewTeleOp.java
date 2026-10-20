@@ -1,12 +1,10 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
-import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.robot.CustomOpMode;
-import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 @Disabled
 @TeleOp(name = "TeleOp", group = "Advanced")
@@ -16,36 +14,30 @@ public class NewTeleOp extends CustomOpMode {
     private boolean slowMode = false;
     private boolean invertMode = false;
 
-    private Follower follower;
-
     @Override
-    //Runs when you click it
     public void init() {
         super.init();
-        follower = Constants.create(robot.hardwareMap);
+        robot.drive.setStartPose(robot.drive.poseStorage);
     }
 
     @Override
-    //Runs on start
     public void start() {
 
     }
 
     @Override
-    //Main loop
     public void loop() {
+        super.loop();
 
-        follower.manual(
+        robot.drive.follower.manual(
                 (invertMode ? 1 : -1) *  (slowMode ? slowModeMultiplier : 1) * gamepad1.left_stick_y,
                 (slowMode ? slowModeMultiplier : 1) * gamepad1.left_stick_x,
                 (slowMode ? slowModeMultiplier : 1) * gamepad1.right_stick_x
         );
-        follower.update();
+        robot.drive.follower.update();
 
         if (gamepad2.right_trigger_pressed && robot.intake.state != Intake.State.OFF) {
             robot.intake.on();
         };
-
-        super.loop();
     }
 }
