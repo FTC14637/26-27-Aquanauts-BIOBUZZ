@@ -20,7 +20,7 @@ public class HardAuto extends LinearOpMode {
 
         if(opModeIsActive()) {
             stright(0.25, 750);
-            sideRight(0.25,1100);
+            turnRight(0.25,1100);
             back(.25, 750);
 
             telemetry.update();
@@ -52,6 +52,17 @@ public class HardAuto extends LinearOpMode {
     }
 
     private void sideRight(double speed, long time) {
+        hardware.frontLeft.setPower(speed);
+        hardware.frontRight.setPower(-speed);
+        hardware.backLeft.setPower(-speed);
+        hardware.backRight.setPower(speed);
+        sleep(time);
+        hardware.frontLeft.setPower(0);
+        hardware.frontRight.setPower(0);
+        hardware.backLeft.setPower(0);
+        hardware.backRight.setPower(0);
+    }
+    private void turnRight(double speed, long time) {
         hardware.frontLeft.setPower(-speed);
         hardware.frontRight.setPower(speed);
         hardware.backLeft.setPower(-speed);
@@ -64,6 +75,18 @@ public class HardAuto extends LinearOpMode {
     }
 
     private void sideLeft(double speed, long time) {
+        hardware.frontLeft.setPower(-speed);
+        hardware.frontRight.setPower(speed);
+        hardware.backLeft.setPower(speed);
+        hardware.backRight.setPower(-speed);
+        sleep(time);
+        hardware.frontLeft.setPower(0);
+        hardware.frontRight.setPower(0);
+        hardware.backLeft.setPower(0);
+        hardware.backRight.setPower(0);
+    }
+
+    private void turnLeft(double speed, long time) {
         hardware.frontLeft.setPower(speed);
         hardware.frontRight.setPower(-speed);
         hardware.backLeft.setPower(speed);
