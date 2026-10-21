@@ -28,12 +28,6 @@ import static com.pedropathing.ivy.pedro.PedroCommands.hold;
 @Autonomous(name = "BlueAuto", group = "Aqua")
 public class BlueAuto extends CustomOpMode {
 
-    private final PoseFactory p = PoseFactory.degrees();
-    private final Pose redStartPose = p.of(58.86, 9.22, 0);
-    private final Pose blueStartPose = p.of(0, 0, 0);
-    private final Pose redParking = p.of(0, 0, 0);
-    private final Pose blueParking = p.of(0, 0, 0);
-
     @Override
     public void init() {
 

@@ -1,25 +1,27 @@
 package org.firstinspires.ftc.teamcode.robot;
 
-//PANELS
-import com.bylazar.fullpanels.*;
+//Panels
 
 //FTC
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-//MECHANISMS
+//Mechanisms
 import org.firstinspires.ftc.teamcode.mechanisms.Launcher;
 import org.firstinspires.ftc.teamcode.mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.mechanisms.Wiper;
 import org.firstinspires.ftc.teamcode.mechanisms.Drive;
 
+//Alliance
+import org.firstinspires.ftc.teamcode.robot.AllianceCheck;
 
 public class Robot {
 
     public final HardwareMap hardwareMap;
     public Telemetry telemetry;
 
+    public AllianceCheck allianceCheck;
     public Intake intake;
     public Launcher launcher;
     public Wiper wiper;
@@ -28,6 +30,8 @@ public class Robot {
     public Robot(OpMode opMode) {
         hardwareMap = opMode.hardwareMap;
         telemetry = opMode.telemetry;
+
+        allianceCheck = new AllianceCheck(this);
 
         intake = new Intake(this);
         launcher = new Launcher(this);

@@ -14,6 +14,8 @@ public class CustomOpMode extends OpMode {
     public void init(){
         robot = new Robot(this);
 
+        robot.allianceCheck.getAlliance();
+
         Scheduler.reset();
 
         Scheduler.schedule(
