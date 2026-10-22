@@ -14,14 +14,14 @@ import org.firstinspires.ftc.teamcode.mechanisms.Wiper;
 import org.firstinspires.ftc.teamcode.mechanisms.Drive;
 
 //Alliance
-import org.firstinspires.ftc.teamcode.robot.AllianceCheck;
+import org.firstinspires.ftc.teamcode.robot.Alliance;
 
 public class Robot {
 
     public final HardwareMap hardwareMap;
     public Telemetry telemetry;
 
-    public AllianceCheck allianceCheck;
+    public Alliance alliance;
     public Intake intake;
     public Launcher launcher;
     public Wiper wiper;
@@ -31,7 +31,7 @@ public class Robot {
         hardwareMap = opMode.hardwareMap;
         telemetry = opMode.telemetry;
 
-        allianceCheck = new AllianceCheck(this);
+        //alliance = new alli(this);
 
         intake = new Intake(this);
         launcher = new Launcher(this);

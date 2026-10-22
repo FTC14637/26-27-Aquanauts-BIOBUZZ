@@ -1,20 +1,30 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+//Ivy
 import com.pedropathing.ivy.Scheduler;
+
+//FTC
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import org.firstinspires.ftc.teamcode.robot.Robot;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+
+//Alliance
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 public class CustomOpMode extends OpMode {
 
     protected Robot robot;
-    //private Telemetry telemetry;
+    public static Alliance currentAlliance;
 
     @Override
     public void init(){
         robot = new Robot(this);
 
-        robot.allianceCheck.getAlliance();
+        currentAlliance = Alliance.fromSensor(robot.hardwareMap.get(ColorSensor.class, "colorSensor"));
+
+        if (currentAlliance == Alliance.UNKNOWN) {
+            telemetry.addData("| URGET!!!", "UNKNOWN ALLIANCE, STARTING AS RED.");
+            currentAlliance = Alliance.RED;
+            telemetry.update();
+        }
 
         Scheduler.reset();
 

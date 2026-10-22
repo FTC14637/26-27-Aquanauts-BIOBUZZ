@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.mechanisms;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.robot.Alliance;
+import org.firstinspires.ftc.teamcode.robot.CustomOpMode;
 import org.firstinspires.ftc.teamcode.robot.Robot;
-import org.firstinspires.ftc.teamcode.robot.AllianceCheck;
 
 //Ivy
 import com.pedropathing.ivy.Command;
@@ -19,16 +20,14 @@ import com.pedropathing.paths.Path;
 public class Drive {
     private final PoseFactory p = PoseFactory.degrees();
 
-    if (AllianceCheck.)
-
     //------------------Pose Configuration------------------//
     public Pose poseStorage = new Pose(0, 0, 0); //Stores pose from Autonomous to transfer to TeleOp
     private final Pose redStartPose = p.of(58.86, 9.22, 0);
     private final Pose blueStartPose = p.of(0, 0, 0);
-    private final Pose redParking = p.of(0, 0, 0);
-    private final Pose blueParking = p.of(0, 0, 0);
-    private Pose startPose = p.of(0, 0, 0); //TODO check some sort of alliance
-    private Pose parkingPose = p.of(0, 0, 0); //TODO check some sort of alliance
+    private final Pose redParkingPose = p.of(0, 0, 0);
+    private final Pose blueParkingPose = p.of(0, 0, 0);
+    private final Pose startPose = ((CustomOpMode.currentAlliance == Alliance.RED) ? redStartPose : blueStartPose);
+    private final Pose parkingPose = ((CustomOpMode.currentAlliance == Alliance.RED) ? redParkingPose : blueParkingPose);
     //-----------------------------------------------------//
 
     //Declarations
