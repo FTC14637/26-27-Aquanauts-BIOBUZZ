@@ -4,6 +4,7 @@ import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.mechanisms.Drive;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.robot.CustomOpMode;
 import org.firstinspires.ftc.teamcode.robot.Robot;
@@ -30,7 +31,7 @@ public class BlueAuto extends CustomOpMode {
 
     @Override
     public void init() {
-
+        //robot.drive.imu.initialize(Drive.imuConf);
     }
 
     @Override

@@ -5,6 +5,10 @@ import org.firstinspires.ftc.teamcode.robot.Alliance;
 import org.firstinspires.ftc.teamcode.robot.CustomOpMode;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 
+//Hardware
+import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+
 //Ivy
 import com.pedropathing.ivy.Command;
 import static com.pedropathing.ivy.commands.Commands.*;
@@ -33,10 +37,18 @@ public class Drive {
     //Declarations
     public Follower follower;
     private Telemetry telemetry;
+    public IMU imu;
+
+    /*
+    public static IMU.Parameters imuConf = new IMU.Parameters(
+            new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.FORWARD, RevHubOrientationOnRobot.UsbFacingDirection.UP)
+    );
+     */
 
     public Drive(Robot robot) {
         follower = Constants.create(robot.hardwareMap);
         telemetry = robot.telemetry;
+        imu = robot.hardwareMap.get(IMU .class, "imu");
     }
 
     //Commands
