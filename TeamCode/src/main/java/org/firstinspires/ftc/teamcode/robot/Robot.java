@@ -31,12 +31,10 @@ public class Robot {
         hardwareMap = opMode.hardwareMap;
         telemetry = opMode.telemetry;
 
-        //alliance = new alli(this);
-
         intake = new Intake(this);
         launcher = new Launcher(this);
         wiper = new Wiper(this);
-        drive = new Drive(this);
+        //drive = new Drive(this);
     }
 
 }

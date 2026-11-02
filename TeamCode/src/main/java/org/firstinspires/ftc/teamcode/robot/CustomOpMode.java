@@ -26,13 +26,15 @@ public class CustomOpMode extends OpMode {
             telemetry.update();
         }
 
+        telemetry.addData("alliance:", currentAlliance);
+
         Scheduler.reset();
 
         Scheduler.schedule(
                 robot.intake.loop(),
                 robot.wiper.loop(),
-                robot.launcher.loop(),
-                robot.drive.loop()
+                robot.launcher.loop()
+                //robot.drive.loop()
         );
     }
 

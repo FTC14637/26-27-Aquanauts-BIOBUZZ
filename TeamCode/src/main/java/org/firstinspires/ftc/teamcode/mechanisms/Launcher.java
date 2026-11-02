@@ -25,6 +25,7 @@ public class Launcher {
     private final DcMotorEx launcherFlyWheel;
     public Launcher(Robot robot) {
         launcherFlyWheel = robot.hardwareMap.get(DcMotorEx.class, "launcherFlyWheel");
+        launcherFlyWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
     }
 
     //States

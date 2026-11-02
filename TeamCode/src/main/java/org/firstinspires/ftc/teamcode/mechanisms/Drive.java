@@ -26,10 +26,10 @@ public class Drive {
 
     //------------------Pose Configuration------------------//
     public Pose poseStorage = new Pose(0, 0, 0); //Stores pose from Autonomous to transfer to TeleOp
-    private final Pose redStartPose = p.of(58.86, 9.22, 0);
+    private final Pose redStartPose = p.of(58, 9, -90);
     private final Pose blueStartPose = p.of(0, 0, 0);
-    private final Pose redParkingPose = p.of(0, 0, 0);
-    private final Pose blueParkingPose = p.of(0, 0, 0);
+    private final Pose redParkingPose = p.of(14, 99, 0);
+    private final Pose blueParkingPose = p.of(125, 40, 180);
     private final Pose startPose = ((CustomOpMode.currentAlliance == Alliance.RED) ? redStartPose : blueStartPose);
     private final Pose parkingPose = ((CustomOpMode.currentAlliance == Alliance.RED) ? redParkingPose : blueParkingPose);
     //-----------------------------------------------------//

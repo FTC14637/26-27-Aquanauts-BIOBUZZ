@@ -7,16 +7,18 @@ import com.pedropathing.ivy.Command;
 import static com.pedropathing.ivy.commands.Commands.*;
 
 //Hardware
-import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 
 //This is the main spinning intake mechanism.
 public class Intake {
 
     //Declarations
-    private final DcMotor intake;
+    private final DcMotorEx intake;
     public Intake(Robot robot) {
-        intake = robot.hardwareMap.get(DcMotor.class, "intake");
+        intake = robot.hardwareMap.get(DcMotorEx.class, "intake");
+        intake.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        intake.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }
 
     //States
@@ -39,13 +41,13 @@ public class Intake {
         return infinite(() -> {
             switch(state){
                 case ON:
-                    intake.setPower(0.1);
+                    intake.setVelocity(60000);
                     break;
                 case OFF:
                     intake.setPower(0);
                     break;
                 case REVERSE:
-                    intake.setPower(-0.1);
+                    intake.setVelocity(-1000);
                     break;
             }
         });

@@ -69,7 +69,7 @@ public class MainTeleOp extends CustomOpMode {
         }
 
         if (gamepad2.leftTriggerWasPressed() && robot.launcher.state == Launcher.State.READY) {
-            //launcher lauch
+            //launcher launch
             robot.launcher.launch();
         }
 
