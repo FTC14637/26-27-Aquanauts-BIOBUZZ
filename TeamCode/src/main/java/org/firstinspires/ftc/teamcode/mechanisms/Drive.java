@@ -13,6 +13,7 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.pedropathing.ivy.Command;
 import static com.pedropathing.ivy.commands.Commands.*;
 import static com.pedropathing.ivy.pedro.PedroCommands.*;
+import static com.pedropathing.ivy.groups.Groups.*;
 
 //Pedro
 import org.firstinspires.ftc.teamcode.pedro.Constants;
@@ -20,6 +21,7 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
+import static com.pedropathing.api.Paths.*;
 
 public class Drive {
     private final PoseFactory p = PoseFactory.degrees();
@@ -32,6 +34,14 @@ public class Drive {
     private final Pose blueParkingPose = p.of(125, 40, 180);
     private final Pose startPose = ((CustomOpMode.currentAlliance == Alliance.RED) ? redStartPose : blueStartPose);
     private final Pose parkingPose = ((CustomOpMode.currentAlliance == Alliance.RED) ? redParkingPose : blueParkingPose);
+
+    //Path Declarations
+    private Path startToPark() {
+        return line(startPose, parkingPose).linear(startPose, parkingPose);
+    }
+    private Path park() {
+        return line(follower.pose(), parkingPose).linear(follower.pose(), parkingPose);
+    }
     //-----------------------------------------------------//
 
     //Declarations
@@ -48,7 +58,7 @@ public class Drive {
     public Drive(Robot robot) {
         follower = Constants.create(robot.hardwareMap);
         telemetry = robot.telemetry;
-        imu = robot.hardwareMap.get(IMU .class, "imu");
+        //imu = robot.hardwareMap.get(IMU .class, "imu");
     }
 
     //Commands
