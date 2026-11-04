@@ -17,9 +17,8 @@ public class BlueAuto extends CustomOpMode {
 
     private Command autoRoutine() {
         return sequential(
-                follow(follower, startToScore()),
-                // Add mechanism commands here.
-                follow(follower, park())
+                robot.drive.followPath(robot.drive.startToPark()),
+                robot.drive.followPath(robot.drive.startToPark())
         );
     }
 
@@ -30,7 +29,7 @@ public class BlueAuto extends CustomOpMode {
 
     @Override
     public void start() {
-
+        autoRoutine().schedule();
     }
 
     @Override

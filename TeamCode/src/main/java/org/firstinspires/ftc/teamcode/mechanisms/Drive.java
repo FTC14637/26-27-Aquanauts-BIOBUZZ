@@ -36,10 +36,10 @@ public class Drive {
     private final Pose parkingPose = ((CustomOpMode.currentAlliance == Alliance.RED) ? redParkingPose : blueParkingPose);
 
     //Path Declarations
-    private Path startToPark() {
+    public Path startToPark() {
         return line(startPose, parkingPose).linear(startPose, parkingPose);
     }
-    private Path park() {
+    public Path park() {
         return line(follower.pose(), parkingPose).linear(follower.pose(), parkingPose);
     }
     //-----------------------------------------------------//

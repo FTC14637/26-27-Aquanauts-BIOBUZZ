@@ -29,7 +29,7 @@ public class Launcher {
     }
 
     //States
-    public enum State {IDLE, SPEEDING_UP, READY, LAUNCHING}
+    public enum State {IDLE, SPEEDING_UP, READY, LAUNCHING, ON, OFF}
     public State state = State.IDLE;
 
     //Timer
@@ -39,6 +39,8 @@ public class Launcher {
     public Command on() {return instant(() -> state= State.SPEEDING_UP).requiring(launcherFlyWheel);};
     public Command launch() {return instant(() -> state= State.LAUNCHING).requiring(launcherFlyWheel);};
     public Command off() {return instant(() -> state= State.IDLE).requiring(launcherFlyWheel);};
+
+    public Command temp_on() {return instant(() -> state= State.ON).requiring(launcherFlyWheel);};
 
     //Main Loop
     public Command loop() {
@@ -81,6 +83,11 @@ public class Launcher {
                     //TODO open gate
 
                     break;
+
+                case ON:
+
+                    break;
+
             }
         });
     }
