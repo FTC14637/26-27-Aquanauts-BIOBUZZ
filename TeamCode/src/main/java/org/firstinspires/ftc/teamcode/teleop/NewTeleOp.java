@@ -38,7 +38,7 @@ public class NewTeleOp extends CustomOpMode {
                 (slowMode ? slowModeMultiplier : 1) * gamepad1.right_stick_x
         );
 
-        /*
+
         if (gamepad2.leftBumperWasPressed() && robot.launcher.state == Launcher.State.IDLE) {
             robot.launcher.on();
             //launcher on
@@ -48,7 +48,7 @@ public class NewTeleOp extends CustomOpMode {
             //launcher launch
             robot.launcher.launch();
         }
-        */
+
 
         if (gamepad2.leftTriggerWasPressed()) {
             //extend

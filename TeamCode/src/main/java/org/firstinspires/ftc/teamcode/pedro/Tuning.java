@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.pedro.procedures.MecanumTuner;
 import org.firstinspires.ftc.teamcode.pedro.procedures.ThreeWheelIMUTuner;
 
 public class Tuning {
+    /*
     @Tuner
     public static Procedure threeWheelIMUTuner() {
         return new ThreeWheelIMUTuner();
@@ -18,4 +19,6 @@ public class Tuning {
     public static Procedure foresightTuner() {
         return new ForesightTuner((hardwareMap) -> new PinpointLocalizer(hardwareMap, Constants.localizerConfig), (hardwareMap) -> new Mecanum(hardwareMap, Constants.drivetrainConfig));
     }
+
+     */
 }

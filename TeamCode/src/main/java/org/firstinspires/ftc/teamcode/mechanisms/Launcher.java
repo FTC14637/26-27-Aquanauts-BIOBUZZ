@@ -15,7 +15,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class Launcher {
 
     //------------------Configuration------------------//
-    private final int targetVelocity = 5000; // Target velocity for the motors
+    private final int targetVelocity = 2500; // Target velocity for the motors
     private final int tolerance = 100; // Tolerance for the target velocity allowed for launch
     private final int inTime = 250; //(milliseconds) How long the launcher must be within the target velocity tolerance to launch
     private final int timeout = 10; // (seconds) How long the until the launcher returns to IDLE with no input
