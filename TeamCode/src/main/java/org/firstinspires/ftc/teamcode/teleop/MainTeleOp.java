@@ -23,7 +23,6 @@ public class MainTeleOp extends CustomOpMode {
         super.init();
 
         hardware.init(hardwareMap);
-
         telemetry.addLine("Initialized, waiting for start...");
     }
 
@@ -36,7 +35,7 @@ public class MainTeleOp extends CustomOpMode {
     public void loop() {
         super.loop();
 
-        double y = (invertMode? 1 : -1)*gamepad1.left_stick_y;
+        double y = (invertMode ? -1 : 1)*gamepad1.left_stick_y;
         double x = gamepad1.left_stick_x;
         double rx = gamepad1.right_stick_x;
 
@@ -54,6 +53,7 @@ public class MainTeleOp extends CustomOpMode {
         hardware.frontRight.setPower(frontRightPower);
         hardware.backRight.setPower(backRightPower);
 
+        telemetry.addData("Alliance: ", currentAlliance);
         telemetry.addData("Invert Mode: ", invertMode);
         telemetry.addData("Slow Mode: ", slowMode);
         telemetry.addData("Intake: ", robot.intake.state);
@@ -63,35 +63,23 @@ public class MainTeleOp extends CustomOpMode {
         telemetry.addData("FRP: ", frontRightPower);
         telemetry.addData("BRP: ,", backRightPower);
 
-        if (gamepad2.leftBumperWasPressed() && robot.launcher.state == Launcher.State.IDLE) {
-            robot.launcher.on();
-            //launcher on
+
+
+        //PAD2
+        /*
+        if (gamepad2.leftBumperWasPressed()) {
+            if(robot.launcher.state == Launcher.State.OFF) {
+                robot.launcher.on().schedule();
+            } else if (robot.launcher.state ==  Launcher.State.ON || robot.launcher.state == Launcher.State.REVERSE) {
+                robot.launcher.off().schedule();
+            }
         }
 
-        if (gamepad2.leftTriggerWasPressed() && robot.launcher.state == Launcher.State.READY) {
-            //launcher launch
-            robot.launcher.launch();
+        if (gamepad2.dpadUpWasReleased() &&  (robot.launcher.state == Launcher.State.OFF)) {
+            //reverse launcher
+            robot.launcher.reverse().schedule();
         }
-
-        if (gamepad1.bWasPressed()) {
-            //extend
-            robot.wiper.extend().schedule();
-        }
-
-        if (gamepad1.xWasPressed()) {
-            //retract wiper
-            robot.wiper.retract().schedule();
-        }
-
-        if (gamepad1.rightTriggerWasPressed()) {
-            //slow mode
-            slowMode = !slowMode;
-        }
-
-        if (gamepad1.aWasPressed()) {
-            //invert mode
-            invertMode =!invertMode;
-        }
+         */
 
         if (gamepad2.rightBumperWasPressed()) {
             //intake toggle
@@ -105,6 +93,28 @@ public class MainTeleOp extends CustomOpMode {
         if (gamepad2.yWasPressed() &&  (robot.intake.state == Intake.State.OFF || robot.intake.state == Intake.State.ON)) {
             //reverse intake
             robot.intake.reverse().schedule();
+        }
+
+        //BOTH
+        if (gamepad1.bWasPressed() || gamepad2.bWasPressed()) {
+            //extend
+            robot.wiper.extend().schedule();
+        }
+
+        if (gamepad1.xWasPressed() || gamepad2.xWasPressed()) {
+            //retract wiper
+            robot.wiper.retract().schedule();
+        }
+
+        //PAD1
+        if (gamepad1.rightTriggerWasPressed()) {
+            //slow mode
+            slowMode = !slowMode;
+        }
+
+        if (gamepad1.aWasPressed()) {
+            //invert mode
+            invertMode =!invertMode;
         }
     }
 }

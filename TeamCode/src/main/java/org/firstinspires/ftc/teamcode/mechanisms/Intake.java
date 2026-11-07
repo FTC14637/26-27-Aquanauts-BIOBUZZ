@@ -8,6 +8,7 @@ import static com.pedropathing.ivy.commands.Commands.*;
 
 //Hardware
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
 //This is the main spinning intake mechanism.
@@ -17,6 +18,7 @@ public class Intake {
     private final DcMotorEx intake;
     public Intake(Robot robot) {
         intake = robot.hardwareMap.get(DcMotorEx.class, "intake");
+        intake.setDirection(DcMotorSimple.Direction.REVERSE);
         intake.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         intake.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }

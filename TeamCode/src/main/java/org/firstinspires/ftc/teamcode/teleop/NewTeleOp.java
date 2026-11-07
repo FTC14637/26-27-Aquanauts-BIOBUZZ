@@ -39,20 +39,21 @@ public class NewTeleOp extends CustomOpMode {
         );
 
 
+        /*
         if (gamepad2.leftBumperWasPressed() && robot.launcher.state == Launcher.State.IDLE) {
             robot.launcher.on();
             //launcher on
         }
+         */
 
-        if (gamepad2.leftTriggerWasPressed() && robot.launcher.state == Launcher.State.READY) {
-            //launcher launch
-            robot.launcher.launch();
+        if (gamepad2.leftTriggerWasPressed() && robot.launcher.state == Launcher.State.OFF) {
+            //launcher on
+            robot.launcher.on();
         }
 
-
-        if (gamepad2.leftTriggerWasPressed()) {
-            //extend
-            robot.launcher.temp_on();
+        if (gamepad2.leftBumperWasPressed() && robot.launcher.state == Launcher.State.ON) {
+            //launcher off
+            robot.launcher.off();
         }
 
         if (gamepad1.bWasPressed()) {
@@ -97,6 +98,6 @@ public class NewTeleOp extends CustomOpMode {
         telemetry.addData("Invert Mode: ", invertMode);
         telemetry.addData("Slow Mode: ", slowMode);
         telemetry.addData("Intake: ", robot.intake.state);
-        //telemetry.addData("Launcher: ", robot.launcher.state);
+        telemetry.addData("Launcher: ", robot.launcher.state);
     }
 }

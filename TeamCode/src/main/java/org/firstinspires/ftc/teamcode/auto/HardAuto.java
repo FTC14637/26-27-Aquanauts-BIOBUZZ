@@ -19,27 +19,15 @@ public class HardAuto extends LinearOpMode {
         if(isStopRequested()) return; // Stops if stopped is pressed
 
         if(opModeIsActive()) {
-            stright(0.25, 750);
-            turnRight(0.25,1100);
-            back(.25, 750);
+            stright(0.5, 775);
+            right(0.5,1000);
+            back(.5, 550);
 
             telemetry.update();
         }
     }
 
     private void stright(double speed, long time) {
-        hardware.frontLeft.setPower(speed);
-        hardware.frontRight.setPower(speed);
-        hardware.backLeft.setPower(speed);
-        hardware.backRight.setPower(speed);
-        sleep(time);
-        hardware.frontLeft.setPower(0);
-        hardware.frontRight.setPower(0);
-        hardware.backLeft.setPower(0);
-        hardware.backRight.setPower(0);
-    }
-
-    private void back(double speed, long time) {
         hardware.frontLeft.setPower(-speed);
         hardware.frontRight.setPower(-speed);
         hardware.backLeft.setPower(-speed);
@@ -51,7 +39,31 @@ public class HardAuto extends LinearOpMode {
         hardware.backRight.setPower(0);
     }
 
-    private void sideRight(double speed, long time) {
+    private void back(double speed, long time) {
+        hardware.frontLeft.setPower(speed);
+        hardware.frontRight.setPower(speed);
+        hardware.backLeft.setPower(speed);
+        hardware.backRight.setPower(speed);
+        sleep(time);
+        hardware.frontLeft.setPower(0);
+        hardware.frontRight.setPower(0);
+        hardware.backLeft.setPower(0);
+        hardware.backRight.setPower(0);
+    }
+
+    private void right(double speed, long time) {
+        hardware.frontLeft.setPower(-speed);
+        hardware.frontRight.setPower(speed);
+        hardware.backLeft.setPower(speed);
+        hardware.backRight.setPower(-speed);
+        sleep(time);
+        hardware.frontLeft.setPower(0);
+        hardware.frontRight.setPower(0);
+        hardware.backLeft.setPower(0);
+        hardware.backRight.setPower(0);
+    }
+
+    private void left(double speed, long time) {
         hardware.frontLeft.setPower(speed);
         hardware.frontRight.setPower(-speed);
         hardware.backLeft.setPower(-speed);
@@ -63,20 +75,8 @@ public class HardAuto extends LinearOpMode {
         hardware.backRight.setPower(0);
     }
     private void turnRight(double speed, long time) {
-        hardware.frontLeft.setPower(-speed);
-        hardware.frontRight.setPower(speed);
-        hardware.backLeft.setPower(-speed);
-        hardware.backRight.setPower(speed);
-        sleep(time);
-        hardware.frontLeft.setPower(0);
-        hardware.frontRight.setPower(0);
-        hardware.backLeft.setPower(0);
-        hardware.backRight.setPower(0);
-    }
-
-    private void sideLeft(double speed, long time) {
-        hardware.frontLeft.setPower(-speed);
-        hardware.frontRight.setPower(speed);
+        hardware.frontLeft.setPower(speed);
+        hardware.frontRight.setPower(-speed);
         hardware.backLeft.setPower(speed);
         hardware.backRight.setPower(-speed);
         sleep(time);
@@ -87,10 +87,10 @@ public class HardAuto extends LinearOpMode {
     }
 
     private void turnLeft(double speed, long time) {
-        hardware.frontLeft.setPower(speed);
-        hardware.frontRight.setPower(-speed);
-        hardware.backLeft.setPower(speed);
-        hardware.backRight.setPower(-speed);
+        hardware.frontLeft.setPower(-speed);
+        hardware.frontRight.setPower(speed);
+        hardware.backLeft.setPower(-speed);
+        hardware.backRight.setPower(speed);
         sleep(time);
         hardware.frontLeft.setPower(0);
         hardware.frontRight.setPower(0);
