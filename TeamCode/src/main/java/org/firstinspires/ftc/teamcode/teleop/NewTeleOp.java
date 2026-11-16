@@ -56,21 +56,6 @@ public class NewTeleOp extends CustomOpMode {
             robot.launcher.off();
         }
 
-        if (gamepad1.bWasPressed()) {
-            //extend
-            robot.wiper.extend().schedule();
-        }
-
-        if (gamepad1.bWasPressed()) {
-            //extend
-            robot.wiper.extend().schedule();
-        }
-
-        if (gamepad1.xWasPressed()) {
-            //retract wiper
-            robot.wiper.retract().schedule();
-        }
-
         if (gamepad1.rightTriggerWasPressed()) {
             //slow mode
             slowMode = !slowMode;

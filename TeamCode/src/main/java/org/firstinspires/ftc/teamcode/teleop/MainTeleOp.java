@@ -95,17 +95,6 @@ public class MainTeleOp extends CustomOpMode {
             robot.intake.reverse().schedule();
         }
 
-        //BOTH
-        if (gamepad1.bWasPressed() || gamepad2.bWasPressed()) {
-            //extend
-            robot.wiper.extend().schedule();
-        }
-
-        if (gamepad1.xWasPressed() || gamepad2.xWasPressed()) {
-            //retract wiper
-            robot.wiper.retract().schedule();
-        }
-
         //PAD1
         if (gamepad1.rightTriggerWasPressed()) {
             //slow mode
