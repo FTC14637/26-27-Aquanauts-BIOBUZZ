@@ -10,11 +10,11 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 //Mechanisms
 import org.firstinspires.ftc.teamcode.mechanisms.Launcher;
 import org.firstinspires.ftc.teamcode.mechanisms.Intake;
-import org.firstinspires.ftc.teamcode.mechanisms.Wiper;
+import org.firstinspires.ftc.teamcode.mechanisms.Gates;
 import org.firstinspires.ftc.teamcode.mechanisms.Drive;
 
 //Alliance
-import org.firstinspires.ftc.teamcode.robot.Alliance;
+
 
 public class Robot {
 
@@ -24,7 +24,7 @@ public class Robot {
     public Alliance alliance;
     public Intake intake;
     public Launcher launcher;
-    public Wiper wiper;
+    public Gates gates;
     public Drive drive;
 
     public Robot(OpMode opMode) {
@@ -33,7 +33,7 @@ public class Robot {
 
         intake = new Intake(this);
         launcher = new Launcher(this);
-        wiper = new Wiper(this);
+        gates = new Gates(this);
         //drive = new Drive(this);
     }
 
