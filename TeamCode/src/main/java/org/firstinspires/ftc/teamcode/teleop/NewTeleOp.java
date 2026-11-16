@@ -51,11 +51,6 @@ public class NewTeleOp extends CustomOpMode {
             robot.launcher.on();
         }
 
-        if (gamepad2.leftBumperWasPressed() && robot.launcher.state == Launcher.State.ON) {
-            //launcher off
-            robot.launcher.off();
-        }
-
         if (gamepad1.rightTriggerWasPressed()) {
             //slow mode
             slowMode = !slowMode;

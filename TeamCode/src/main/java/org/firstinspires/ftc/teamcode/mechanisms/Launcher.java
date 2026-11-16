@@ -7,6 +7,7 @@ import com.pedropathing.ivy.Command;
 import static com.pedropathing.ivy.commands.Commands.*;
 
 //Hardware
+import com.pedropathing.ivy.behaviors.BlockedBehavior;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -38,16 +39,29 @@ public class Launcher {
     public State state = State.OFF;
 
     //Commands
-    public Command on() {
-        return instant(() -> state= Launcher.State.ON).requiring(launcherFlyWheel);
-    };
-    public Command off() {
-        return instant(() -> state= Launcher.State.OFF).requiring(launcherFlyWheel);
-    };
+    public Command launch() {
+        return Command.build()
+                .setStart(() -> {
 
-    public Command reverse() {
-        return instant(() -> state= State.REVERSE).requiring(launcherFlyWheel);
-    };
+                })
+                .setExecute(() -> {
+                    launcherFlyWheel.setVelocity(targetVelocity);
+                    //gate.setPosition(Servo.MIN_POSITION);
+
+                    //Check if flywheel is fast enough (with a small tolerance)
+                    if (Math.abs(launcherFlyWheel.getVelocity() - targetVelocity) <= tolerance) {
+                        //If the flywheel has been stable in range for long enough move to ready
+                        if (timer.milliseconds() >= inTime) {
+                            //todo open gates
+                        }
+                    } else {
+                        timer.reset();
+                    }
+                })
+                .requiring(launcherFlyWheel)
+                .setBlockedBehavior(BlockedBehavior.CANCEL)
+                .setPriority(1);
+    }
 
     //Main Loop
     public Command loop() {
