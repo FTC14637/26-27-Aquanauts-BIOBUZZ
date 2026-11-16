@@ -63,46 +63,33 @@ public class MainTeleOp extends CustomOpMode {
         telemetry.addData("FRP: ", frontRightPower);
         telemetry.addData("BRP: ,", backRightPower);
 
-
-
-        //PAD2
-        /*
-        if (gamepad2.leftBumperWasPressed()) {
-            if(robot.launcher.state == Launcher.State.OFF) {
-                robot.launcher.on().schedule();
-            } else if (robot.launcher.state ==  Launcher.State.ON || robot.launcher.state == Launcher.State.REVERSE) {
-                robot.launcher.off().schedule();
-            }
+        //PAD 2
+        if (gamepad2.xWasPressed()) {
+            robot.gates.leftGate().schedule();
         }
 
-        if (gamepad2.dpadUpWasReleased() &&  (robot.launcher.state == Launcher.State.OFF)) {
-            //reverse launcher
-            robot.launcher.reverse().schedule();
+        if (gamepad2.bWasPressed()) {
+            robot.gates.rightGate().schedule();
         }
-         */
+
+        if (gamepad2.aWasPressed()) {
+            robot.gates.toggleGates().schedule();
+        }
 
         if (gamepad2.rightBumperWasPressed()) {
-            //intake toggle
-            if(robot.intake.state == Intake.State.OFF) {
-                robot.intake.on().schedule();
-            } else if (robot.intake.state ==  Intake.State.ON || robot.intake.state == Intake.State.REVERSE) {
-                robot.intake.off().schedule();
-            }
+            robot.intake.toggleIntake().schedule();
         }
 
-        if (gamepad2.yWasPressed() &&  (robot.intake.state == Intake.State.OFF || robot.intake.state == Intake.State.ON)) {
-            //reverse intake
-            robot.intake.reverse().schedule();
+        if (gamepad2.yWasPressed()) {
+            robot.intake.reverseIntake().schedule();
         }
 
-        //PAD1
+        //PAD 1
         if (gamepad1.rightTriggerWasPressed()) {
-            //slow mode
             slowMode = !slowMode;
         }
 
         if (gamepad1.aWasPressed()) {
-            //invert mode
             invertMode =!invertMode;
         }
     }

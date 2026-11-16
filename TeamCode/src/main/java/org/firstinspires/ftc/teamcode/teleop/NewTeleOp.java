@@ -67,17 +67,11 @@ public class NewTeleOp extends CustomOpMode {
         }
 
         if (gamepad2.rightBumperWasPressed()) {
-            //intake toggle
-            if(robot.intake.state == Intake.State.OFF) {
-                robot.intake.on().schedule();
-            } else if (robot.intake.state ==  Intake.State.ON || robot.intake.state == Intake.State.REVERSE) {
-                robot.intake.off().schedule();
-            }
+
         }
 
         if (gamepad2.yWasPressed() &&  (robot.intake.state == Intake.State.OFF || robot.intake.state == Intake.State.ON)) {
-            //reverse intake
-            robot.intake.reverse().schedule();
+
         }
 
         telemetry.addData("Invert Mode: ", invertMode);

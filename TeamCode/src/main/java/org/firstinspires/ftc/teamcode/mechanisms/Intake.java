@@ -7,6 +7,7 @@ import com.pedropathing.ivy.Command;
 import static com.pedropathing.ivy.commands.Commands.*;
 
 //Hardware
+import com.pedropathing.ivy.behaviors.BlockedBehavior;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
@@ -28,30 +29,30 @@ public class Intake {
     public State state = State.OFF;
 
     //Commands
-    public Command on() {
-        return instant(() -> state=State.ON).requiring(intake);
-    };
-    public Command off() {
-        return instant(() -> state=State.OFF).requiring(intake);
-    };
-    public Command reverse() {
-        return instant(() -> state=State.REVERSE).requiring(intake);
-    };
+    public Command toggleIntake() {
+        return Command.build()
+                .setExecute(() -> {
+                    if (state == State.OFF) {
+                        intake.setVelocity(60000);
+                        state = State.ON;
+                    } else if (state == State.ON || state == State.REVERSE) {
+                        intake.setPower(0);
+                    }
+                })
+                .requiring(intake)
+                .setPriority(2);
+    }
 
-    //Main Loop
-    public Command loop() {
-        return infinite(() -> {
-            switch(state){
-                case ON:
-                    intake.setVelocity(60000);
-                    break;
-                case OFF:
-                    intake.setPower(0);
-                    break;
-                case REVERSE:
-                    intake.setVelocity(-1000);
-                    break;
-            }
-        });
+    public Command reverseIntake() {
+        return Command.build()
+                .setExecute(() -> {
+                    if (state == State.OFF || state == State.ON) {
+                        intake.setVelocity(-1000);
+                        state = State.REVERSE;
+                    }
+                })
+                .requiring(intake)
+                .setBlockedBehavior(BlockedBehavior.CANCEL)
+                .setPriority(1);
     }
 }

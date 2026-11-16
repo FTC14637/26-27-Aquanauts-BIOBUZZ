@@ -25,8 +25,6 @@ public class CustomOpMode extends OpMode {
         Scheduler.reset();
 
         Scheduler.schedule(
-                robot.intake.loop(),
-                robot.wiper.loop(),
                 robot.launcher.loop()
                 //robot.drive.loop()
         );

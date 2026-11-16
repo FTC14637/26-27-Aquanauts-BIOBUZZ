@@ -14,6 +14,7 @@ public class HardAuto extends LinearOpMode {
     public void runOpMode() {
 
         hardware.init(hardwareMap);
+        telemetry.addLine("Initialized, waiting for start...");
 
         waitForStart();
         if(isStopRequested()) return; // Stops if stopped is pressed
