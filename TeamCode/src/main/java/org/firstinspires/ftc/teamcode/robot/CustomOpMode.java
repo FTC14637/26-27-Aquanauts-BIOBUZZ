@@ -20,21 +20,16 @@ public class CustomOpMode extends OpMode {
 
         currentAlliance = Alliance.fromSensor(robot.hardwareMap.get(ColorSensor.class, "colorSensor"));
 
-        telemetry.addData("alliance:", currentAlliance);
+        telemetry.addData("Alliance:", currentAlliance);
 
         Scheduler.reset();
-
-        Scheduler.schedule(
-                robot.launcher.loop()
-                //robot.drive.loop()
-        );
     }
 
     @Override
     public void init_loop() {
 
-        if (gamepad1.bWasPressed()) {currentAlliance=Alliance.RED; telemetry.addData("override alliance:", currentAlliance);}
-        if (gamepad1.xWasPressed()) {currentAlliance=Alliance.BLUE; telemetry.addData("override alliance:", currentAlliance);}
+        if (gamepad1.bWasPressed()) {currentAlliance=Alliance.RED; telemetry.addData("Override alliance:", currentAlliance);}
+        if (gamepad1.xWasPressed()) {currentAlliance=Alliance.BLUE; telemetry.addData("Override alliance:", currentAlliance);}
 
         Scheduler.execute();
     }

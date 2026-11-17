@@ -39,35 +39,9 @@ public class NewTeleOp extends CustomOpMode {
         );
 
 
-        /*
-        if (gamepad2.leftBumperWasPressed() && robot.launcher.state == Launcher.State.IDLE) {
-            robot.launcher.on();
-            //launcher on
-        }
-         */
 
-        if (gamepad2.leftTriggerWasPressed() && robot.launcher.state == Launcher.State.OFF) {
-            //launcher on
-            robot.launcher.on();
-        }
 
-        if (gamepad1.rightTriggerWasPressed()) {
-            //slow mode
-            slowMode = !slowMode;
-        }
 
-        if (gamepad1.aWasPressed()) {
-            //invert mode
-            invertMode =!invertMode;
-        }
-
-        if (gamepad2.rightBumperWasPressed()) {
-
-        }
-
-        if (gamepad2.yWasPressed() &&  (robot.intake.state == Intake.State.OFF || robot.intake.state == Intake.State.ON)) {
-
-        }
 
         telemetry.addData("Invert Mode: ", invertMode);
         telemetry.addData("Slow Mode: ", slowMode);

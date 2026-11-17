@@ -80,8 +80,19 @@ public class MainTeleOp extends CustomOpMode {
             robot.intake.toggleIntake().schedule();
         }
 
-        if (gamepad2.yWasPressed()) {
+        /*
+        if (gamepad2.rightBumperWasPressed()) {
             robot.intake.reverseIntake().schedule();
+        }
+
+         */
+
+        if (gamepad2.leftTriggerWasPressed()) {
+            robot.launcher.intLauncher().schedule();
+        }
+
+        if (gamepad2.leftBumperWasPressed()) {
+            robot.launcher.launcherOff().schedule();
         }
 
         //PAD 1
@@ -89,8 +100,12 @@ public class MainTeleOp extends CustomOpMode {
             slowMode = !slowMode;
         }
 
-        if (gamepad1.aWasPressed()) {
+        if (gamepad1.leftTriggerWasPressed()) {
             invertMode =!invertMode;
+        }
+
+        if (gamepad1.yWasPressed()) {
+            robot.intake.toggleIntake().schedule();
         }
     }
 }

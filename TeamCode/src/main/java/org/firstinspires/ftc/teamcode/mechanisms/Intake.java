@@ -8,6 +8,7 @@ import static com.pedropathing.ivy.commands.Commands.*;
 
 //Hardware
 import com.pedropathing.ivy.behaviors.BlockedBehavior;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
@@ -20,7 +21,7 @@ public class Intake {
     public Intake(Robot robot) {
         intake = robot.hardwareMap.get(DcMotorEx.class, "intake");
         intake.setDirection(DcMotorSimple.Direction.REVERSE);
-        intake.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        intake.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         intake.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }
 
@@ -33,10 +34,11 @@ public class Intake {
         return Command.build()
                 .setExecute(() -> {
                     if (state == State.OFF) {
-                        intake.setVelocity(60000);
                         state = State.ON;
+                        intake.setPower(1);
                     } else if (state == State.ON || state == State.REVERSE) {
                         intake.setPower(0);
+                        state = State.OFF;
                     }
                 })
                 .requiring(intake)
@@ -47,7 +49,7 @@ public class Intake {
         return Command.build()
                 .setExecute(() -> {
                     if (state == State.OFF || state == State.ON) {
-                        intake.setVelocity(-1000);
+                        intake.setPower(-0.1);
                         state = State.REVERSE;
                     }
                 })

@@ -8,6 +8,7 @@ import static com.pedropathing.ivy.commands.Commands.*;
 
 //Hardware
 import com.pedropathing.ivy.behaviors.BlockedBehavior;
+import com.pedropathing.ivy.behaviors.InterruptedBehavior;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -35,70 +36,53 @@ public class Launcher {
     }
 
     //States
-    public enum State {OFF, SPEED_UP, ON, REVERSE}
+    public enum State {OFF, SPINNING_UP, READY, ON, REVERSE}
     public State state = State.OFF;
 
     //Commands
-    public Command launch() {
+    public Command intLauncher() {
         return Command.build()
-                .setStart(() -> {
-
-                })
+                .setStart(timer::reset)
                 .setExecute(() -> {
-                    launcherFlyWheel.setVelocity(targetVelocity);
-                    //gate.setPosition(Servo.MIN_POSITION);
+                    state = State.SPINNING_UP;
 
-                    //Check if flywheel is fast enough (with a small tolerance)
+                    launcherFlyWheel.setVelocity(targetVelocity);
                     if (Math.abs(launcherFlyWheel.getVelocity() - targetVelocity) <= tolerance) {
-                        //If the flywheel has been stable in range for long enough move to ready
                         if (timer.milliseconds() >= inTime) {
-                            //todo open gates
+                            state = State.READY;
                         }
                     } else {
                         timer.reset();
                     }
+                })
+                .setDone(() -> state == State.READY)
+                .setEnd(endCondition -> state=State.ON)
+                .requiring(launcherFlyWheel)
+                .setBlockedBehavior(BlockedBehavior.CANCEL)
+                .setPriority(2);
+    }
+
+    public Command launcherOff() {
+        return Command.build()
+                .setStart(timer::reset)
+                .setExecute(() -> {
+                    launcherFlyWheel.setPower(0);
+                    state=State.OFF;
+                })
+                .requiring(launcherFlyWheel)
+                .setInterruptedBehavior(InterruptedBehavior.END)
+                .setPriority(3);
+    }
+
+    public Command launcherReverse() {
+        return Command.build()
+                .setStart(timer::reset)
+                .setExecute(() -> {
+                    launcherFlyWheel.setPower(-0.1);
+                    state = State.REVERSE;
                 })
                 .requiring(launcherFlyWheel)
                 .setBlockedBehavior(BlockedBehavior.CANCEL)
                 .setPriority(1);
-    }
-
-    //Main Loop
-    public Command loop() {
-        return infinite(() -> {
-            switch (state) {
-                case OFF:
-                    //gate.setPosition(Servo.MIN_POSITION);
-                    launcherFlyWheel.setPower(0);
-
-                    break;
-                case SPEED_UP:
-                    launcherFlyWheel.setVelocity(targetVelocity);
-                    //gate.setPosition(Servo.MIN_POSITION);
-
-                    //Check if flywheel is fast enough (with a small tolerance)
-                    if (Math.abs(launcherFlyWheel.getVelocity() - targetVelocity) <= tolerance) {
-                        //If the flywheel has been stable in range for long enough move to ready
-                        if (timer.milliseconds() >= inTime) {
-                            state = State.ON;
-                        }
-                    } else {
-                        timer.reset();
-                        //If it fails it restarts the timer
-                    }
-
-                    break;
-                case ON:
-                    launcherFlyWheel.setVelocity(targetVelocity);
-                    //gate.setPosition(Servo.MAX_POSITION);
-
-                    break;
-                case REVERSE:
-                    //gate.setPosition(Servo.MAX_POSITION);
-                    launcherFlyWheel.setPower(-0.1);
-
-                    break;
-            }
-        });
     }
 }
