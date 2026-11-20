@@ -41,6 +41,7 @@ public class Intake {
                         state = State.OFF;
                     }
                 })
+                .setDone(() -> state == State.ON || state == State.OFF)
                 .requiring(intake)
                 .setPriority(2);
     }
@@ -49,11 +50,12 @@ public class Intake {
         return Command.build()
                 .setExecute(() -> {
                     if (state == State.OFF || state == State.ON) {
-                        intake.setPower(-0.1);
+                        intake.setPower(-1);
                         state = State.REVERSE;
                     }
                 })
                 .requiring(intake)
+                .setDone(() -> state == State.REVERSE)
                 .setBlockedBehavior(BlockedBehavior.CANCEL)
                 .setPriority(1);
     }

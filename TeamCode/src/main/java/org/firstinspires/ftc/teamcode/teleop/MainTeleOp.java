@@ -62,6 +62,9 @@ public class MainTeleOp extends CustomOpMode {
         telemetry.addData("BLP: ", backLeftPower);
         telemetry.addData("FRP: ", frontRightPower);
         telemetry.addData("BRP: ,", backRightPower);
+        telemetry.addData("Tel", robot.launcher.a);
+        telemetry.addData("LGate: ", robot.gates.gateLPos);
+        telemetry.addData("RGate: ", robot.gates.gateRPos);
 
         //PAD 2
         if (gamepad2.xWasPressed()) {
@@ -73,39 +76,32 @@ public class MainTeleOp extends CustomOpMode {
         }
 
         if (gamepad2.aWasPressed()) {
-            robot.gates.toggleGates().schedule();
+            robot.gates.gatesDown().schedule();
         }
 
-        if (gamepad2.rightBumperWasPressed()) {
+        if (gamepad2.yWasPressed()) {
+            robot.gates.gatesUp().schedule();
+        }
+
+        if (gamepad2.rightTriggerWasPressed()) {
             robot.intake.toggleIntake().schedule();
         }
 
-        /*
         if (gamepad2.rightBumperWasPressed()) {
             robot.intake.reverseIntake().schedule();
         }
 
-         */
-
         if (gamepad2.leftTriggerWasPressed()) {
-            robot.launcher.intLauncher().schedule();
-        }
-
-        if (gamepad2.leftBumperWasPressed()) {
-            robot.launcher.launcherOff().schedule();
+            robot.launcher.launcherToggle().schedule();
         }
 
         //PAD 1
-        if (gamepad1.rightTriggerWasPressed()) {
+        if (gamepad1.rightBumperWasPressed()) {
             slowMode = !slowMode;
         }
 
-        if (gamepad1.leftTriggerWasPressed()) {
+        if (gamepad1.leftBumperWasPressed()) {
             invertMode =!invertMode;
-        }
-
-        if (gamepad1.yWasPressed()) {
-            robot.intake.toggleIntake().schedule();
         }
     }
 }
